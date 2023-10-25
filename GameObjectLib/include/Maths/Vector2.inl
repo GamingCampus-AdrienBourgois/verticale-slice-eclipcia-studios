@@ -1,5 +1,10 @@
 #pragma once
 
+#include <cmath>
+
+#pragma warning(push)
+#pragma warning(disable : 4244)
+
 namespace Maths
 {
 
@@ -94,57 +99,57 @@ Vector2<T> Vector2<T>::operator/=(const T& rhs)
 }
 
 template<typename T>
-float Vector2<T>::Dot(const Vector2& rhs)
+float Vector2<T>::Dot(const Vector2& rhs) const
 {
 	return x * rhs.x + y * rhs.y;
 }
 
 template<typename T>
-Vector2<T> Vector2<T>::Cross(const Vector2& rhs)
+float Vector2<T>::Cross(const Vector2& rhs) const
 {
-	return Vector2(x * rhs.y - y * rhs.x);
+	return x * rhs.y - y * rhs.x;
 }
 
 template<typename T>
-float Vector2<T>::Magnitude()
+float Vector2<T>::Magnitude() const
 {
 	return sqrt(x * x + y * y);
 }
 
 template<typename T>
-float Vector2<T>::MagnitudeSquared()
+float Vector2<T>::MagnitudeSquared() const
 {
 	return x * x + y * y;
 }
 
 template<typename T>
-Vector2<T> Vector2<T>::Normalize()
+Vector2<T> Vector2<T>::Normalize() const
 {
 	return Vector2(x / Magnitude(), y / Magnitude());
 }
 
 template<typename T>
-float Vector2<T>::Distance(const Vector2<T>& rhs)
+float Vector2<T>::Distance(const Vector2<T>& rhs) const
 {
-	return sqrt((x - rhs.x) * (x - rhs.x) + (y - rhs.y) * (y - rhs.y));
+	return std::sqrt((x - rhs.x) * (x - rhs.x) + (y - rhs.y) * (y - rhs.y));
 }
 
 template<typename T>
-float Vector2<T>::DistanceSquared(const Vector2& rhs)
+float Vector2<T>::DistanceSquared(const Vector2& rhs) const
 {
 	return (x - rhs.x) * (x - rhs.x) + (y - rhs.y) * (y - rhs.y);
 }
 
 template<typename T>
-float Vector2<T>::Angle(const Vector2& rhs)
+float Vector2<T>::Angle(const Vector2& rhs) const
 {
-	return acos(Dot(rhs) / (Magnitude() * rhs.Magnitude()));
+	return std::acos(this->Dot(rhs) / (Magnitude() * rhs.Magnitude()));
 }
 
 template<typename T>
-Vector2<T> Vector2<T>::Rotate(const T& angle)
+Vector2<T> Vector2<T>::Rotate(const T& angle) const
 {
-	return Vector2(x * cos(angle) - y * sin(angle), x * sin(angle) + y * cos(angle));
+	return Vector2(x * std::cos(angle) - y * std::sin(angle), x * std::sin(angle) + y * std::cos(angle));
 }
 
 template<typename T>
@@ -230,3 +235,4 @@ const Vector2<T> Vector2<T>::Right(1, 0);
 
 }
 
+#pragma warning(pop)

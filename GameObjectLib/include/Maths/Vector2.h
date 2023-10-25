@@ -49,23 +49,23 @@ namespace Maths
 		Vector2 operator/=(const T& rhs);
 
 		//Dot Product
-		float Dot(const Vector2& rhs);
+		float Dot(const Vector2& rhs) const;
 		//Cross Product
-		Vector2 Cross(const Vector2& rhs);
+		float Cross(const Vector2& rhs) const;
 		//Magnitude
-		float Magnitude();
+		float Magnitude() const;
 		//Magnitude Squared
-		float MagnitudeSquared();
+		float MagnitudeSquared() const;
 		//Normalize
-		Vector2 Normalize();
+		Vector2 Normalize() const;
 		//Distance
-		float Distance(const Vector2& rhs);
+		float Distance(const Vector2& rhs) const;
 		//Distance Squared
-		float DistanceSquared(const Vector2& rhs);
+		float DistanceSquared(const Vector2& rhs) const;
 		//Angle
-		float Angle(const Vector2& rhs);
+		float Angle(const Vector2& rhs) const;
 		//Rotate
-		Vector2 Rotate(const T& angle);
+		Vector2 Rotate(const T& angle) const;
 
 		//Lerp
 		static Vector2 Lerp(const Vector2& lhs, const Vector2& rhs, const T& alpha);
@@ -110,5 +110,10 @@ namespace Maths
 	using Vector2f = Vector2<float>;
 	using Vector2d = Vector2<double>;
 }
+
+template class Maths::Vector2<int>;
+template class Maths::Vector2<unsigned int>;
+template class Maths::Vector2<float>;
+template class Maths::Vector2<double>;
 
 #include "Maths/Vector2.inl"
