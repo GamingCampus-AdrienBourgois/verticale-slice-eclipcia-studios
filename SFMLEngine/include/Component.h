@@ -10,7 +10,7 @@ class Component
 {
 public:
 	Component() = default;
-	Component(GameObject* owner);
+	Component(GameObject* _owner);
 	virtual ~Component() = default;
 
 	virtual void Update();

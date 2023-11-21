@@ -1,13 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "Component.h"
 
-class ShapeRenderer : public Component
+#include "ARendererComponent.h"
+
+class RectangleShapeRenderer : public ARendererComponent
 {
 public:
-	ShapeRenderer();
-	~ShapeRenderer() override;
+	RectangleShapeRenderer();
+	~RectangleShapeRenderer() override;
 
 	void SetColor(const sf::Color& _color) { color = _color; }
 
@@ -15,5 +16,6 @@ public:
 
 private:
 	sf::Color color = sf::Color::White;
+
 	sf::RectangleShape* shape = nullptr;
 };

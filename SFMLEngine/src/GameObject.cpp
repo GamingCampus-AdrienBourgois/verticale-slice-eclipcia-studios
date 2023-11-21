@@ -1,5 +1,13 @@
 #include "GameObject.h"
 
+GameObject::~GameObject()
+{
+	for (Component*& component : components)
+		delete component;
+
+	components.clear();
+}
+
 void GameObject::AddComponent(Component* _component)
 {
 	_component->SetOwner(this);

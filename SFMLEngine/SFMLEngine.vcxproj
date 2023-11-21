@@ -19,17 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Components\ShapeRenderer.h" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Modules\InputModule.cpp" />
+    <ClCompile Include="src\Modules\SceneModule.cpp" />
+    <ClCompile Include="src\Modules\TimeModule.cpp" />
+    <ClCompile Include="src\Modules\WindowModule.cpp" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Components\ARendererComponent.h" />
+    <ClInclude Include="include\Components\RectangleShapeRenderer.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
-    <ClInclude Include="include\Components\Component.h" />
+    <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
-    <ClCompile Include="src\Components\ShapeRenderer.cpp" />
+    <ClCompile Include="src\ModuleManager.cpp" />
+    <ClCompile Include="src\Module.cpp" />
+    <ClCompile Include="src\Components\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Components\ARendererComponent.cpp" />
+    <ClCompile Include="src\Components\RectangleShapeRenderer.cpp" />
+    <ClInclude Include="include\Components\SpriteRenderer.h" />
+    <ClInclude Include="include\Module.h" />
+    <ClInclude Include="include\ModuleManager.h" />
+    <ClInclude Include="include\Modules\TimeModule.h" />
+    <ClInclude Include="include\Modules\SceneModule.h" />
+    <ClInclude Include="include\Modules\WindowModule.h" />
+    <ClInclude Include="include\Modules\InputModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\Components\Component.cpp" />
+    <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Maths\Vector2.cpp" />
@@ -43,6 +61,7 @@
     <ProjectGuid>{fae7003c-61cf-41e6-9b58-70e97d3f7878}</ProjectGuid>
     <RootNamespace>GameObjectLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SFMLEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -50,6 +69,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+	<LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -57,12 +77,14 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+	<LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+	<LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -70,6 +92,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+	<LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

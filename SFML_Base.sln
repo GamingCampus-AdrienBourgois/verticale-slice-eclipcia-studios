@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj", "{D7E77E90-E797-494F-B490-0E68BE96126B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameObjectLib", "GameObjectLib\GameObjectLib.vcxproj", "{FAE7003C-61CF-41E6-9B58-70E97D3F7878}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFMLEngine", "SFMLEngine\SFMLEngine.vcxproj", "{FAE7003C-61CF-41E6-9B58-70E97D3F7878}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
