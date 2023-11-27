@@ -1,7 +1,7 @@
 #include "Modules/InputModule.h"
 
-#include "Modules/WindowModule.h"
 #include "ModuleManager.h"
+#include "Modules/WindowModule.h"
 
 void InputModule::Start()
 {

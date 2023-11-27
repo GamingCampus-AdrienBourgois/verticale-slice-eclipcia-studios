@@ -18,6 +18,7 @@ public:
 	void Render() const;
 	void PostRender() const;
 	void Release() const;
+	void Finalize() const;
 
 	template<class T>
 	T* CreateModule();

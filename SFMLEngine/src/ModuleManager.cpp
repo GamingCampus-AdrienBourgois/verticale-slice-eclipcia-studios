@@ -1,8 +1,10 @@
 #include "ModuleManager.h"
 
-#include "Modules/WindowModule.h"
+#include "Modules/ImGuiModule.h"
+#include "Modules/InputModule.h"
 #include "Modules/SceneModule.h"
 #include "Modules/TimeModule.h"
+#include "Modules/WindowModule.h"
 
 ModuleManager::~ModuleManager()
 {
@@ -13,8 +15,10 @@ ModuleManager::~ModuleManager()
 void ModuleManager::CreateDefaultModules()
 {
 	CreateModule<TimeModule>();
+	CreateModule<InputModule>();
 	CreateModule<WindowModule>();
 	CreateModule<SceneModule>();
+	CreateModule<ImGuiModule>();
 }
 
 void ModuleManager::Init() const
@@ -70,5 +74,13 @@ void ModuleManager::Release() const
 	for (Module* module : modules)
 	{
 		module->Release();
+	}
+}
+
+void ModuleManager::Finalize() const
+{
+	for (Module* module : modules)
+	{
+		module->Finalize();
 	}
 }

@@ -1,4 +1,5 @@
 #include "Components/RectangleShapeRenderer.h"
+
 #include "SFML/Graphics/Shape.hpp"
 
 RectangleShapeRenderer::RectangleShapeRenderer()

@@ -19,11 +19,11 @@ void GameObject::RemoveComponent(Component* _component)
 	components.erase(std::remove(components.begin(), components.end(), _component), components.end());
 }
 
-void GameObject::Update() const
+void GameObject::Update(const float _delta_time) const
 {
 	for (Component* const& component : components)
 	{
-		component->Update();
+		component->Update(_delta_time);
 	}
 }
 

@@ -17,6 +17,7 @@ public:
 	virtual void Render() {}
 	virtual void PostRender() {}
 	virtual void Release() {}
+	virtual void Finalize() {}
 
 protected:
 	ModuleManager* moduleManager = nullptr;

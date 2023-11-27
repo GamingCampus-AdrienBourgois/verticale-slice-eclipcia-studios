@@ -114,12 +114,12 @@ namespace Maths
 		static const Vector2 Left;
 		static const Vector2 Right;
 
-		friend bool operator==(const Vector2& __lhs, const Vector2& __rhs)
+		friend bool operator==(const Vector2& _lhs, const Vector2& _rhs)
 		{
-			return __lhs.x == __rhs.x && __lhs.y == __rhs.y;
+			return _lhs.x == _rhs.x && _lhs.y == _rhs.y;
 		}
 
-		friend bool operator!=(const Vector2& __lhs, const Vector2& __rhs) { return !(__lhs == __rhs); }
+		friend bool operator!=(const Vector2& _lhs, const Vector2& _rhs) { return !(_lhs == _rhs); }
 	};
 
 	using Vector2i = Vector2<int>;

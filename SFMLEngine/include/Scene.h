@@ -16,6 +16,8 @@ public:
 	std::string GetName() const;
 
 	GameObject* CreateGameObject(const std::string& _name);
+	void DestroyGameObject(const GameObject* _game_object);
+	GameObject* FindGameObject(const std::string& _name) const;
 
 private:
 	std::string name;

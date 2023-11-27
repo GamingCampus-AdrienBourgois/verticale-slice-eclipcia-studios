@@ -25,3 +25,13 @@ float TimeModule::GetTimeSinceBeginning() const
 {
 	return clock.getElapsedTime().asSeconds();
 }
+
+sf::Clock TimeModule::GetDeltaClock() const
+{
+	return deltaClock;
+}
+
+sf::Clock TimeModule::GetClockSinceBeginning() const
+{
+	return clock;
+}

@@ -10,10 +10,10 @@ class Component
 {
 public:
 	Component() = default;
-	Component(GameObject* _owner);
+	explicit Component(GameObject* _owner);
 	virtual ~Component() = default;
 
-	virtual void Update();
+	virtual void Update(float _delta_time);
 	virtual void Render(sf::RenderWindow* _window);
 
 	GameObject* GetOwner() const { return owner; }

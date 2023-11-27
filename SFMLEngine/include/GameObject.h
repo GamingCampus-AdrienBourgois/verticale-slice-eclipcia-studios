@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#include "Maths/Vector2.h"
 #include "Component.h"
+#include "Maths/Vector2.h"
 
 class Component;
 
@@ -32,7 +32,7 @@ public:
 	void AddComponent(Component* _component);
 	void RemoveComponent(Component* _component);
 
-	void Update() const;
+	void Update(float _delta_time) const;
 	void Render(sf::RenderWindow* _window) const;
 
 private:

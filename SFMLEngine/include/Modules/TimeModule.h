@@ -9,12 +9,14 @@ public:
 	TimeModule() = default;
 	~TimeModule() = default;
 
-public:
 	void Init() override;
 	void Update() override;
 
 	float GetDeltaTime() const;
 	float GetTimeSinceBeginning() const;
+
+	sf::Clock GetDeltaClock() const;
+	sf::Clock GetClockSinceBeginning() const;
 
 private:
 	sf::Clock deltaClock;

@@ -1,5 +1,7 @@
 #include "Modules/WindowModule.h"
 
+#include <imgui-SFML.h>
+#include <iostream>
 #include <SFML/Window/Event.hpp>
 
 #include "Engine.h"
@@ -23,6 +25,8 @@ void WindowModule::Update()
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
+		ImGui::SFML::ProcessEvent(*window, event);
+
 		if (event.type == sf::Event::Closed)
 		{
 			Engine::GetInstance()->Quit();

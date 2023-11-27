@@ -1,5 +1,8 @@
 #include "Engine.h"
 
+#include <imgui.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 Engine* Engine::instance = nullptr;
 
 Engine* Engine::GetInstance()
@@ -29,4 +32,5 @@ void Engine::Run() const
 	}
 
 	moduleManager->Release();
+	moduleManager->Finalize();
 }
