@@ -9,7 +9,7 @@ public:
 	TimeModule() = default;
 	~TimeModule() = default;
 
-	void Init() override;
+	void Awake() override;
 	void Update() override;
 
 	float GetDeltaTime() const;

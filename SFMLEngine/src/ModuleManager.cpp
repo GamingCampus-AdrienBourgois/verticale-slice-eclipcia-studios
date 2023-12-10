@@ -8,7 +8,7 @@
 
 ModuleManager::~ModuleManager()
 {
-	Release();
+	Destroy();
 	modules.clear();
 }
 
@@ -16,16 +16,16 @@ void ModuleManager::CreateDefaultModules()
 {
 	CreateModule<TimeModule>();
 	CreateModule<InputModule>();
+	CreateModule<ImGuiModule>();
 	CreateModule<WindowModule>();
 	CreateModule<SceneModule>();
-	CreateModule<ImGuiModule>();
 }
 
-void ModuleManager::Init() const
+void ModuleManager::Awake() const
 {
 	for (Module* module : modules)
 	{
-		module->Init();
+		module->Awake();
 	}
 }
 
@@ -69,11 +69,59 @@ void ModuleManager::PostRender() const
 	}
 }
 
-void ModuleManager::Release() const
+void ModuleManager::OnDebug() const
 {
 	for (Module* module : modules)
 	{
-		module->Release();
+		module->OnDebug();
+	}
+}
+
+void ModuleManager::OnDebugSelected() const
+{
+	for (Module* module : modules)
+	{
+		module->OnDebugSelected();
+	}
+}
+
+void ModuleManager::Present() const
+{
+	for (Module* module : modules)
+	{
+		module->Present();
+	}
+}
+
+void ModuleManager::OnGUI() const
+{
+	for (Module* module : modules)
+	{
+		module->OnGUI();
+	}
+}
+
+void ModuleManager::OnEnable() const
+{
+	for (Module* module : modules)
+	{
+		module->OnEnable();
+	}
+}
+
+void ModuleManager::OnDisable() const
+{
+	for (Module* module : modules)
+	{
+		module->OnDisable();
+	}
+}
+
+void ModuleManager::Destroy() const
+{
+	for (Module* module : modules)
+	{
+		module->Destroy();
 	}
 }
 

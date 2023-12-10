@@ -1,37 +1,15 @@
 #include "Modules/WindowModule.h"
 
-#include <imgui-SFML.h>
 #include <iostream>
 #include <SFML/Window/Event.hpp>
 
 #include "Engine.h"
 
-void WindowModule::Init()
+void WindowModule::Awake()
 {
-	Module::Init();
+	Module::Awake();
 
 	window = new sf::RenderWindow(sf::VideoMode(600, 600), "SFML Engine");
-}
-
-void WindowModule::Start()
-{
-	Module::Start();
-}
-
-void WindowModule::Update()
-{
-	Module::Update();
-
-	sf::Event event;
-	while (window->pollEvent(event))
-	{
-		ImGui::SFML::ProcessEvent(*window, event);
-
-		if (event.type == sf::Event::Closed)
-		{
-			Engine::GetInstance()->Quit();
-		}
-	}
 }
 
 void WindowModule::PreRender()
@@ -41,21 +19,16 @@ void WindowModule::PreRender()
 	window->clear(sf::Color::Black);
 }
 
-void WindowModule::Render()
+void WindowModule::Present()
 {
-	Module::Render();
-}
-
-void WindowModule::PostRender()
-{
-	Module::PostRender();
+	Module::Present();
 
 	window->display();
 }
 
-void WindowModule::Release()
+void WindowModule::Destroy()
 {
-	Module::Release();
+	Module::Destroy();
 
 	window->close();
 }

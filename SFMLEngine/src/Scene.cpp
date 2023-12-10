@@ -7,6 +7,102 @@ Scene::Scene(const std::string& _name)
 	name = _name;
 }
 
+void Scene::Awake() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->Awake();
+	}
+}
+
+void Scene::Start() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->Start();
+	}
+}
+
+void Scene::PreRender() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->PreRender();
+	}
+}
+
+void Scene::OnGUI() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->OnGUI();
+	}
+}
+
+void Scene::PostRender() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->PostRender();
+	}
+}
+
+void Scene::OnDebug() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->OnDebug();
+	}
+}
+
+void Scene::OnDebugSelected() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->OnDebugSelected();
+	}
+}
+
+void Scene::Present() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->Present();
+	}
+}
+
+void Scene::OnEnable() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->OnEnable();
+	}
+}
+
+void Scene::OnDisable() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->OnDisable();
+	}
+}
+
+void Scene::Destroy() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->Destroy();
+	}
+}
+
+void Scene::Finalize() const
+{
+	for (GameObject* const& game_object : gameObjects)
+	{
+		game_object->Finalize();
+	}
+}
+
 void Scene::Update(const float _delta_time) const
 {
 	for (GameObject* const& game_object : gameObjects)
@@ -23,7 +119,7 @@ void Scene::Render(sf::RenderWindow* _window) const
 	}
 }
 
-std::string Scene::GetName() const
+const std::string& Scene::GetName() const
 {
 	return name;
 }
@@ -59,4 +155,9 @@ GameObject* Scene::FindGameObject(const std::string& _name) const
 		}
 	}
 	return nullptr;
+}
+
+const std::vector<GameObject*>& Scene::GetGameObjects() const
+{
+	return gameObjects;
 }

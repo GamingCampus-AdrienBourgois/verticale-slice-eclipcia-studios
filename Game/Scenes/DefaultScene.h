@@ -1,4 +1,7 @@
 #pragma once
+
+#include "GameObject.h"
+#include "Player.h"
 #include "RectangleShapeRenderer.h"
 #include "Scene.h"
 #include "SquareCollider.h"
@@ -9,6 +12,7 @@ public:
 	DefaultScene() : Scene("DefaultScene")
 	{
 		GameObject* player = CreateDummyGameObject("Player", 200.f, sf::Color::Red);
+		player->CreateComponent<Player>();
 
 		GameObject* enemy = CreateDummyGameObject("Enemy", 400.f, sf::Color::Blue);
 		GameObject* enemy2 = CreateDummyGameObject("Enemy2", 0.f, sf::Color::Green);

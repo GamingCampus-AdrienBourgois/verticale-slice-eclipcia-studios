@@ -11,13 +11,22 @@ public:
 
 	void CreateDefaultModules();
 
-	void Init() const;
+	void Awake() const;
 	void Start() const;
 	void Update() const;
+
 	void PreRender() const;
 	void Render() const;
+	void OnGUI() const;
 	void PostRender() const;
-	void Release() const;
+	void OnDebug() const;
+	void OnDebugSelected() const;
+	void Present() const;
+
+	void OnEnable() const;
+	void OnDisable() const;
+
+	void Destroy() const;
 	void Finalize() const;
 
 	template<class T>

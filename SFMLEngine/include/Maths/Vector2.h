@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <SFML/System/Vector2.hpp>
 
 namespace Maths
@@ -31,11 +32,27 @@ namespace Maths
 		 * \brief Explicit conversion to sf::Vector2
 		 */
 		explicit operator sf::Vector2<T>() const { return sf::Vector2<T>(x, y); }
+		explicit Vector2(sf::Vector2<T> _value) : x(_value.x), y(_value.y) {}
 
 		Vector2(const Vector2& _other) = default;
 		Vector2(Vector2&& _other) noexcept = default;
 		Vector2& operator=(const Vector2& _other) = default;
+
+		Vector2& operator=(const sf::Vector2<T>& _other)
+		{
+			x = _other.x;
+			y = _other.y;
+			return *this;
+		}
+
 		Vector2& operator=(Vector2&& _other) noexcept = default;
+
+		Vector2& operator=(sf::Vector2<T>&& _other) noexcept
+		{
+			x = std::move(_other.x);
+			y = std::move(_other.y);
+			return *this;
+		}
 
 		//Addition
 		Vector2 operator+(const Vector2& _rhs);

@@ -29,11 +29,28 @@ public:
 	template<typename T>
 	T* GetComponent();
 
+	std::vector<Component*>& GetComponents();
+
 	void AddComponent(Component* _component);
 	void RemoveComponent(Component* _component);
 
+	void Awake() const;
+	void Start() const;
 	void Update(float _delta_time) const;
+
+	void PreRender() const;
 	void Render(sf::RenderWindow* _window) const;
+	void OnGUI() const;
+	void PostRender() const;
+	void OnDebug() const;
+	void OnDebugSelected() const;
+	void Present() const;
+
+	void OnEnable() const;
+	void OnDisable() const;
+
+	void Destroy() const;
+	void Finalize() const;
 
 private:
 	std::string name = "GameObject";

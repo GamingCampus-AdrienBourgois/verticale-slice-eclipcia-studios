@@ -8,6 +8,11 @@ GameObject::~GameObject()
 	components.clear();
 }
 
+std::vector<Component*>& GameObject::GetComponents()
+{
+	return components;
+}
+
 void GameObject::AddComponent(Component* _component)
 {
 	_component->SetOwner(this);
@@ -17,6 +22,104 @@ void GameObject::AddComponent(Component* _component)
 void GameObject::RemoveComponent(Component* _component)
 {
 	components.erase(std::remove(components.begin(), components.end(), _component), components.end());
+}
+
+#pragma region Events
+
+void GameObject::Awake() const
+{
+	for (Component* const& component : components)
+	{
+		component->Awake();
+	}
+}
+
+void GameObject::Start() const
+{
+	for (Component* const& component : components)
+	{
+		component->Start();
+	}
+}
+
+void GameObject::PreRender() const
+{
+	for (Component* const& component : components)
+	{
+		component->PreRender();
+	}
+}
+
+void GameObject::OnGUI() const
+{
+	for (Component* const& component : components)
+	{
+		component->OnGUI();
+	}
+}
+
+void GameObject::PostRender() const
+{
+	for (Component* const& component : components)
+	{
+		component->PostRender();
+	}
+}
+
+void GameObject::OnDebug() const
+{
+	for (Component* const& component : components)
+	{
+		component->OnDebug();
+	}
+}
+
+void GameObject::OnDebugSelected() const
+{
+	for (Component* const& component : components)
+	{
+		component->OnDebugSelected();
+	}
+}
+
+void GameObject::Present() const
+{
+	for (Component* const& component : components)
+	{
+		component->Present();
+	}
+}
+
+void GameObject::OnEnable() const
+{
+	for (Component* const& component : components)
+	{
+		component->OnEnable();
+	}
+}
+
+void GameObject::OnDisable() const
+{
+	for (Component* const& component : components)
+	{
+		component->OnDisable();
+	}
+}
+
+void GameObject::Destroy() const
+{
+	for (Component* const& component : components)
+	{
+		component->Destroy();
+	}
+}
+
+void GameObject::Finalize() const
+{
+	for (Component* const& component : components)
+	{
+		component->Finalize();
+	}
 }
 
 void GameObject::Update(const float _delta_time) const
@@ -34,3 +137,5 @@ void GameObject::Render(sf::RenderWindow* _window) const
 		component->Render(_window);
 	}
 }
+
+#pragma endregion

@@ -16,21 +16,26 @@ Engine* Engine::GetInstance()
 void Engine::Init() const
 {
 	moduleManager->CreateDefaultModules();
-	moduleManager->Init();
+	moduleManager->Awake();
 }
 
 void Engine::Run() const
 {
 	moduleManager->Start();
+	moduleManager->OnEnable();
 
 	while (!shouldQuit)
 	{
 		moduleManager->Update();
 		moduleManager->PreRender();
 		moduleManager->Render();
+		moduleManager->OnGUI();
+		moduleManager->OnDebug();
 		moduleManager->PostRender();
+		moduleManager->Present();
 	}
 
-	moduleManager->Release();
+	moduleManager->OnDisable();
+	moduleManager->Destroy();
 	moduleManager->Finalize();
 }

@@ -15,11 +15,23 @@ public:
 	void Start() override;
 	void Render() override;
 	void Update() override;
+	void Awake() override;
+	void Destroy() override;
+	void Finalize() override;
+	void OnDebug() override;
+	void OnDebugSelected() override;
+	void OnDisable() override;
+	void OnEnable() override;
+	void OnGUI() override;
+	void PostRender() override;
+	void PreRender() override;
+	void Present() override;
 
 	template<typename T>
 	Scene* SetScene(bool _replace_scenes = true);
 
 	Scene* GetMainScene() const { return mainScene; }
+	const std::vector<Scene*>& GetScenes() const;
 	Scene* GetScene(const std::string& _scene_name) const;
 
 private:

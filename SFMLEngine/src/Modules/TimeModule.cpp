@@ -1,8 +1,8 @@
 #include "Modules/TimeModule.h"
 
-void TimeModule::Init()
+void TimeModule::Awake()
 {
-	Module::Init();
+	Module::Awake();
 
 	deltaClock.restart();
 	clock.restart();
