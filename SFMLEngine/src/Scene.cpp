@@ -146,6 +146,25 @@ GameObject* Scene::CreateGameObject(const std::string& _name, const int _health,
 	return game_object;
 }
 
+GameObject* Scene::CreatePlatformObject(const std::string& _name, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName)
+{
+	GameObject* const game_object = new GameObject();
+	game_object->SetName(_name);
+	game_object->SetPosition(_position);
+	game_object->SetScene(this);
+	gameObjects.push_back(game_object);
+
+	SquareCollider* square_collider = game_object->CreateComponent<SquareCollider>();
+	square_collider->SetWidth(_size.x);
+	square_collider->SetHeight(_size.y);
+
+	RectangleShapeRenderer* shape_renderer = game_object->CreateComponent<RectangleShapeRenderer>();
+	shape_renderer->SetColor(_color);
+	shape_renderer->SetSize(_size);
+
+	return game_object;
+}
+
 
 
 

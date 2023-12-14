@@ -36,7 +36,7 @@ public:
     }
 
 private:
-    float speed = 100.0f;
+    float speed = 150.0f;
     float gravity = 500.0f;
     float jumpForce = 200.0f;
     Maths::Vector2<float> velocity = { 0.0f, 0.0f };
