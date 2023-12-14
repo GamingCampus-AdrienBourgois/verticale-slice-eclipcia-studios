@@ -9,7 +9,7 @@ void WindowModule::Awake()
 {
 	Module::Awake();
 
-	window = new sf::RenderWindow(sf::VideoMode(600, 600), "SFML Engine");
+	window = new sf::RenderWindow(sf::VideoMode(1600, 600), "SFML Engine");
 }
 
 void WindowModule::PreRender()

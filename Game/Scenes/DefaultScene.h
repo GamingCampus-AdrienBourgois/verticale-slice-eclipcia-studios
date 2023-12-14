@@ -22,7 +22,7 @@ public:
 		GameObject* enemy2 = CreateGameObject("Enemy", 50, Maths::Vector2<float>(0.f, 400.f), Maths::Vector2<float>(20.f, 20.f), sf::Color::Red, *this);
 		enemy2->CreateComponent<Enemy>();
 
-		GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 500.f), Maths::Vector2<float>(1000.f, 20.f), sf::Color::Green, *this);
+		GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 500.f), Maths::Vector2<float>(1600.f, 20.f), sf::Color::Green, *this);
 		ground->CreateComponent<SquareCollider>();
 
 	}

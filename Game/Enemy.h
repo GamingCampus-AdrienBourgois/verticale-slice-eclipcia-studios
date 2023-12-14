@@ -37,6 +37,8 @@ public:
 		GetOwner()->SetPosition(enemyPosition);
 
 		CheckGroundCollisions();
+
+		//CheckEnemyCollisions();
 	}
 
 private:
@@ -79,4 +81,45 @@ private:
 		isGrounded = false;
 		return false;
 	}
+
+	//void CheckEnemyCollisions()
+	//{
+	//	SquareCollider* squareColliderA = GetOwner()->GetComponent<SquareCollider>();
+
+	//	std::vector<GameObject*> enemies = GetOwner()->GetScene()->FindGameObject("Enemy");
+
+	//	for (GameObject* enemy : enemies)
+	//	{
+	//		if (enemy != GetOwner()) // Avoid self-collision check
+	//		{
+	//			SquareCollider* squareColliderB = enemy->GetComponent<SquareCollider>();
+
+	//			if (squareColliderA && squareColliderB && SquareCollider::IsColliding(*squareColliderA, *squareColliderB))
+	//			{
+	//				// Resolve the collision by pushing the enemies away from each other
+	//				ResolveCollision(GetOwner(), enemy);
+	//			}
+	//		}
+	//	}
+	//}
+
+	//void ResolveCollision(GameObject* objA, GameObject* objB)
+	//{
+	//	// Calculate the direction from objA to objB
+	//	Maths::Vector2<float> collisionDir = objB->GetPosition() - objA->GetPosition();
+	//	float distance = Maths::Vector2<float>::Magnitude(collisionDir);
+
+	//	// Calculate the minimum translation distance needed to separate the objects
+	//	float overlap = (objA->GetComponent<SquareCollider>()->GetWidth() + objB->GetComponent<SquareCollider>()->GetWidth()) - distance;
+
+	//	// Normalize the collision direction
+	//	collisionDir.Normalize();
+
+	//	// Calculate the separation vector
+	//	Maths::Vector2<float> separation = collisionDir * overlap * 0.5f;
+
+	//	// Move the objects away from each other
+	//	objA->SetPosition(objA->GetPosition() - separation);
+	//	objB->SetPosition(objB->GetPosition() + separation);
+	//}
 };
