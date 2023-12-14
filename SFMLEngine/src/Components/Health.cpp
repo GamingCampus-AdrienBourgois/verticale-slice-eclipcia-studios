@@ -38,8 +38,5 @@ int Health::GetMaxHealth() const
 
 bool Health::IsDead() const
 {
-    if (currentHealth <= 0)
-        return true;
-    else
-        return false;
+    return currentHealth <= 0;
 }

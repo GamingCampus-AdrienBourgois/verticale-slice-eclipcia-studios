@@ -132,9 +132,9 @@ GameObject* Scene::CreateGameObject(const std::string& _name, const Maths::Vecto
 	game_object->SetScene(this);
 	gameObjects.push_back(game_object);
 
-	//Health* objectHealth = game_object->CreateComponent<Health>();
-	//if (_name == "Player")
-	//	objectHealth->SetDefaultHealth(100);
+	Health* objectHealth = game_object->CreateComponent<Health>();
+	if (_name == "Player")
+		objectHealth->SetDefaultHealth(100);
 
 	SquareCollider* square_collider = game_object->CreateComponent<SquareCollider>();
 	square_collider->SetWidth(_size.x);

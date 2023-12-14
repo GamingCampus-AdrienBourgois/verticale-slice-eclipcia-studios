@@ -1,8 +1,13 @@
 #pragma once
 
-class Health
+#include "Component.h"
+
+class Health : public Component
 {
 public:
+    // Constructeur par défaut
+    Health() : maxHealth(100), currentHealth(100) {}
+
     Health(int maxHealth);
 
     void SetDefaultHealth(int defaultHealth);
