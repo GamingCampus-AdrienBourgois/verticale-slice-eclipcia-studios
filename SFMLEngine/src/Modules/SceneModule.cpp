@@ -2,7 +2,7 @@
 
 #include "ModuleManager.h"
 
-SceneModule::SceneModule(): Module()
+SceneModule::SceneModule() : Module()
 {
 	Scene* main_scene = new Scene("MainScene");
 	scenes.push_back(main_scene);

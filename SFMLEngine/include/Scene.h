@@ -2,6 +2,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "GameObject.h"
+#include "Components/RectangleShapeRenderer.h"
+#include "Components/SquareCollider.h"
+#include "Components/Health.h"
 
 class Scene
 {
@@ -29,7 +32,7 @@ public:
 
 	const std::string& GetName() const;
 
-	GameObject* CreateGameObject(const std::string& _name);
+	GameObject* CreateGameObject(const std::string& _name, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName);
 	void DestroyGameObject(const GameObject* _game_object);
 	GameObject* FindGameObject(const std::string& _name) const;
 	const std::vector<GameObject*>& GetGameObjects() const;

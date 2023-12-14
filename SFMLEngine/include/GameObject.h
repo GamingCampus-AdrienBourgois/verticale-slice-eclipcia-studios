@@ -7,6 +7,8 @@
 
 class Component;
 
+class Scene;
+
 class GameObject
 {
 public:
@@ -52,6 +54,9 @@ public:
 	void Destroy() const;
 	void Finalize() const;
 
+	void SetScene(Scene* _scene);
+	Scene* GetScene() const { return scene; }
+
 private:
 	std::string name = "GameObject";
 
@@ -60,6 +65,8 @@ private:
 	Maths::Vector2<float> scale = Maths::Vector2f::One;
 
 	std::vector<Component*> components;
+
+	Scene* scene;
 };
 
 template<typename T>

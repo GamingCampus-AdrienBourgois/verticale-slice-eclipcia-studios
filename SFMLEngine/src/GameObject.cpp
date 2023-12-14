@@ -138,4 +138,9 @@ void GameObject::Render(sf::RenderWindow* _window) const
 	}
 }
 
+void GameObject::SetScene(Scene* _scene)
+{
+	scene = _scene;
+}
+
 #pragma endregion

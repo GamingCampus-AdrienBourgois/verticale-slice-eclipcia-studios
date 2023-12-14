@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "RectangleShapeRenderer.h"
 #include "Scene.h"
 #include "SquareCollider.h"
@@ -11,26 +12,16 @@ class DefaultScene final : public Scene
 public:
 	DefaultScene() : Scene("DefaultScene")
 	{
-		GameObject* player = CreateDummyGameObject("Player", 200.f, sf::Color::Red);
+		GameObject* player = CreateGameObject("Player", Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(25.f, 10.f), sf::Color::Red, *this);
 		player->CreateComponent<Player>();
+		player->CreateComponent<SquareCollider>();
 
-		GameObject* enemy = CreateDummyGameObject("Enemy", 400.f, sf::Color::Blue);
-		GameObject* enemy2 = CreateDummyGameObject("Enemy2", 0.f, sf::Color::Green);
+		GameObject* enemy = CreateGameObject("Enemy", Maths::Vector2<float>(400.f, 400.f), Maths::Vector2<float>(20.f, 20.f), sf::Color::Blue, *this);
+		enemy->CreateComponent<Enemy>();
+
+		GameObject* ground = CreateGameObject("Ground", Maths::Vector2<float>(0.f, 500.f), Maths::Vector2<float>(1000.f, 20.f), sf::Color::Green, *this);
+		ground->CreateComponent<SquareCollider>();
+
 	}
 
-	GameObject* CreateDummyGameObject(const std::string& _name, const float _position, const sf::Color _color)
-	{
-		GameObject* game_object = CreateGameObject(_name);
-		game_object->SetPosition(Maths::Vector2f(_position, _position));
-
-		SquareCollider* square_collider = game_object->CreateComponent<SquareCollider>();
-		square_collider->SetWidth(20.f);
-		square_collider->SetHeight(20.f);
-
-		RectangleShapeRenderer* shape_renderer = game_object->CreateComponent<RectangleShapeRenderer>();
-		shape_renderer->SetColor(_color);
-		shape_renderer->SetSize(Maths::Vector2f(200.f, 200.f));
-
-		return game_object;
-	}
 };
