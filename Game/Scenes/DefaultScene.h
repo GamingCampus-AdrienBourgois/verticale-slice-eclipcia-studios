@@ -1,0 +1,63 @@
+#pragma once
+
+#include "GameObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "RectangleShapeRenderer.h"
+#include "Scene.h"
+#include "SquareCollider.h"
+
+class DefaultScene final : public Scene
+{
+public:
+    DefaultScene() : Scene("DefaultScene")
+    {
+        GameObject* player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 55.f), sf::Color::White, *this);
+        player->CreateComponent<Player>();
+        player->CreateComponent<SquareCollider>();
+
+        GameObject* enemy1 = CreateGameObject("Enemy", 50, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this);
+        enemy1->CreateComponent<Enemy>();
+
+        GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 750.f), Maths::Vector2<float>(1800.f, 60.f), sf::Color(0, 0, 0, 0), *this);
+        ground->CreateComponent<SquareCollider>();
+
+
+        // Créer les plateformes
+        CreateGroundPlatforms();
+        // Créer les murs
+        
+
+    }
+private:
+    void CreateGroundPlatforms()
+    {
+        // Définir les positions spécifiques pour chaque plateforme
+        std::vector<Maths::Vector2<float>> platformPositions = {
+            Maths::Vector2<float>(230.f, 420.f),
+            Maths::Vector2<float>(700.f, 360.f),
+            Maths::Vector2<float>(1180.f, 435.f)/*,
+            Maths::Vector2<float>(900.f, 350.f),
+            Maths::Vector2<float>(1100.f, 300.f),
+            Maths::Vector2<float>(1300.f, 450.f)*/
+        };
+
+        // Créer 6 instances de la plateforme ("Platform") aux positions spécifiées
+        for (size_t i = 0; i < platformPositions.size(); ++i)
+        {
+            std::string platformName = "Platform" + std::to_string(i + 1);
+            Maths::Vector2<float> platformPosition = platformPositions[i];
+
+            GameObject* platform = CreateGroundPlatform(platformName, platformPosition, Maths::Vector2<float>(185.f, 60.f), sf::Color(0,0,0,0));
+            platform->CreateComponent<SquareCollider>();
+        }
+    }
+
+    GameObject* CreateGroundPlatform(const std::string& name, const Maths::Vector2<float>& position, const Maths::Vector2<float>& size, const sf::Color& color)
+    {
+        GameObject* platform = CreateGameObject(name, 0, position, size, color, *this);
+        platform->CreateComponent<SquareCollider>();
+        return platform;
+    }
+};
+
