@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <iostream>
 
 Scene::Scene(const std::string& _name)
 {
@@ -196,4 +197,22 @@ GameObject* Scene::FindGameObject(const std::string& _name) const
 const std::vector<GameObject*>& Scene::GetGameObjects() const
 {
 	return gameObjects;
+}
+
+
+void Scene::Shutdown()
+{
+	// Effectuez ici toutes les opérations de fermeture spécifiques à votre jeu.
+	// Par exemple, libérez les ressources, fermez les connexions réseau, etc.
+
+	std::cout << "Shutting down scene: " << name << std::endl;
+	// Ajoutez d'autres opérations de fermeture ici si nécessaire.
+
+	// Enfin, détruire tous les GameObjects de la scène.
+	for (auto& gameObject : gameObjects)
+	{
+		gameObject->Destroy();
+	}
+
+	// Vous pouvez également ajouter d'autres opérations de fermeture ici.
 }

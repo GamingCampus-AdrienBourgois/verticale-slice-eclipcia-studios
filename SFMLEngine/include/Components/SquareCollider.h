@@ -5,17 +5,22 @@
 class SquareCollider : public Component
 {
 public:
-	SquareCollider() = default;
-	~SquareCollider() override = default;
+    SquareCollider() = default;
+    ~SquareCollider() override = default;
 
-	float width = 1.0f;
-	float height = 1.0f;
+    float width = 0.0001f;
+    float height = 0.0001f;
 
-	float GetWidth() const { return width; }
-	float GetHeight() const { return height; }
+    float GetWidth() const { return width; }
+    float GetHeight() const { return height; }
 
-	void SetWidth(const float _width) { width = _width; }
-	void SetHeight(const float _height) { height = _height; }
+    float GetLeft() const { return GetOwner()->GetPosition().x - width / 2.0f; }
+    float GetRight() const { return GetOwner()->GetPosition().x + width / 2.0f; }
+    float GetTop() const { return GetOwner()->GetPosition().y - height / 2.0f; }
+    float GetBottom() const { return GetOwner()->GetPosition().y + height / 2.0f; }
 
-	static bool IsColliding(const SquareCollider& _collider_a, const SquareCollider& _collider_b);
+    void SetWidth(const float _width) { width = _width; }
+    void SetHeight(const float _height) { height = _height; }
+
+    static bool IsColliding(const SquareCollider& _collider_a, const SquareCollider& _collider_b);
 };

@@ -19,7 +19,11 @@ public:
 	Maths::Vector2<float> GetPosition() const { return position; }
 	float GetRotation() const { return rotation; }
 	Maths::Vector2<float> GetScale() const { return scale; }
-
+	void Move(float _deltaX, float _deltaY)
+	{
+		position.x += _deltaX;
+		position.y += _deltaY;
+	}
 	void SetName(const std::string& _name) { name = _name; }
 	void SetPosition(const Maths::Vector2<float>& _position) { position = _position; }
 	void SetRotation(const float _rotation) { rotation = _rotation; }

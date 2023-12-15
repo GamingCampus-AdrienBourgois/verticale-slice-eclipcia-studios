@@ -29,6 +29,7 @@ public:
 
 	void Destroy() const;
 	void Finalize() const;
+	void Shutdown();
 
 	const std::string& GetName() const;
 

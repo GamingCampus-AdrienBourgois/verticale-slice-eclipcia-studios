@@ -1,10 +1,12 @@
 #pragma once
 #include "Component.h"
 #include "InputModule.h"
+#include "Projectile.h"
 
 class Enemy : public Component
 {
 public:
+
 	void Update(const float _delta_time) override
 	{
 		GameObject* player = GetOwner()->GetScene()->FindGameObject("Player");
@@ -23,7 +25,6 @@ public:
 		{
 			enemyPosition.x += speed * _delta_time;
 		}
-
 		// Handle vertical movement (gravity and jumping)
 		velocity.y += gravity * _delta_time; // Apply gravity
 
@@ -37,15 +38,17 @@ public:
 		GetOwner()->SetPosition(enemyPosition);
 
 		CheckGroundCollisions();
+		CheckPlayerCollision();
 
-		//CheckEnemyCollisions();
 	}
 
 private:
-
-	float speed = 40.0f;
+	float shootCooldown;
+	float shootTimer;
+	std::vector<GameObject*> projectiles;
+	float speed = 120.0f;
 	float gravity = 500.0f;
-	float jumpForce = 200.0f;
+
 	Maths::Vector2<float> velocity = { 0.0f, 0.0f };
 	bool isGrounded = true;
 
@@ -81,45 +84,21 @@ private:
 		isGrounded = false;
 		return false;
 	}
+	void CheckPlayerCollision()
+	{
+		GameObject* player = GetOwner()->GetScene()->FindGameObject("Player");
 
-	//void CheckEnemyCollisions()
-	//{
-	//	SquareCollider* squareColliderA = GetOwner()->GetComponent<SquareCollider>();
+		if (player)
+		{
+			SquareCollider* squareColliderEnemy = GetOwner()->GetComponent<SquareCollider>();
+			SquareCollider* squareColliderPlayer = player->GetComponent<SquareCollider>();
 
-	//	std::vector<GameObject*> enemies = GetOwner()->GetScene()->FindGameObject("Enemy");
+			if (squareColliderEnemy && squareColliderPlayer && SquareCollider::IsColliding(*squareColliderEnemy, *squareColliderPlayer))
+			{
+				// Collision detected with player, take appropriate action
+				GetOwner()->GetScene()->Shutdown(); // Shutdown the game (replace this with your actual shutdown logic)
+			}
+		}
+	}
 
-	//	for (GameObject* enemy : enemies)
-	//	{
-	//		if (enemy != GetOwner()) // Avoid self-collision check
-	//		{
-	//			SquareCollider* squareColliderB = enemy->GetComponent<SquareCollider>();
-
-	//			if (squareColliderA && squareColliderB && SquareCollider::IsColliding(*squareColliderA, *squareColliderB))
-	//			{
-	//				// Resolve the collision by pushing the enemies away from each other
-	//				ResolveCollision(GetOwner(), enemy);
-	//			}
-	//		}
-	//	}
-	//}
-
-	//void ResolveCollision(GameObject* objA, GameObject* objB)
-	//{
-	//	// Calculate the direction from objA to objB
-	//	Maths::Vector2<float> collisionDir = objB->GetPosition() - objA->GetPosition();
-	//	float distance = Maths::Vector2<float>::Magnitude(collisionDir);
-
-	//	// Calculate the minimum translation distance needed to separate the objects
-	//	float overlap = (objA->GetComponent<SquareCollider>()->GetWidth() + objB->GetComponent<SquareCollider>()->GetWidth()) - distance;
-
-	//	// Normalize the collision direction
-	//	collisionDir.Normalize();
-
-	//	// Calculate the separation vector
-	//	Maths::Vector2<float> separation = collisionDir * overlap * 0.5f;
-
-	//	// Move the objects away from each other
-	//	objA->SetPosition(objA->GetPosition() - separation);
-	//	objB->SetPosition(objB->GetPosition() + separation);
-	//}
 };
