@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\matty\source\repos\verticale-slice-eclipcia-studios\Game\include\Player.h(162): warning C4715: 'Player::CheckEnemyCollision' : les chemins de contrôle ne retournent pas tous une valeur
+  Game.vcxproj -> C:\Users\matty\source\repos\verticale-slice-eclipcia-studios\x64\Debug\Game.exe

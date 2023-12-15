@@ -91,10 +91,8 @@
     <ClInclude Include="include\Maths\Vector2.h" />
     <ClCompile Include="src\ModuleManager.cpp" />
     <ClCompile Include="src\Module.cpp" />
-    <ClCompile Include="src\Components\SpriteRenderer.cpp" />
     <ClCompile Include="src\Components\ARendererComponent.cpp" />
     <ClCompile Include="src\Components\RectangleShapeRenderer.cpp" />
-    <ClInclude Include="include\Components\SpriteRenderer.h" />
     <ClInclude Include="include\Module.h" />
     <ClInclude Include="include\ModuleManager.h" />
     <ClInclude Include="include\Modules\TimeModule.h" />

@@ -12,7 +12,7 @@ void WindowModule::Awake()
 
 	window = new sf::RenderWindow(sf::VideoMode(1600, 800), "SFML Engine");
 	// Charger la texture du fond
-	SetBackgroundTexture("../Assets/fond.jpg");
+	SetBackgroundTexture("Assets/fond.jpg");
 
 }
 

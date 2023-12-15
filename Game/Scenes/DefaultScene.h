@@ -13,11 +13,11 @@ class DefaultScene final : public Scene
 public:
     DefaultScene() : Scene("DefaultScene")
     {
-        GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 55.f), sf::Color::White, *this);
+        GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player1.png", 1.0f, 1.0f);
         player->CreateComponent<Player>();
         player->CreateComponent<SquareCollider>();
 
-        GameObject* enemy1 = CreateGameObject("Enemy", 50, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this);
+        GameObject* enemy1 = CreateGameObject("Enemy", 50, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
         enemy1->CreateComponent<Enemy>();
 
         GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 750.f), Maths::Vector2<float>(1800.f, 60.f), sf::Color(0, 0, 0, 0), *this);
@@ -54,7 +54,7 @@ private:
 
     GameObject* CreateGroundPlatform(const std::string& name, const Maths::Vector2<float>& position, const Maths::Vector2<float>& size, const sf::Color& color)
     {
-        GameObject* platform = CreateGameObject(name, 0, position, size, color, *this);
+        GameObject* platform = CreateGameObject2(name, 0, position, size, color, *this);
         platform->CreateComponent<SquareCollider>();
         return platform;
     }

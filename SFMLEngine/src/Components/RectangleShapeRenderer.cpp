@@ -41,3 +41,19 @@ void RectangleShapeRenderer::OnDebug()
 
 	ImGui::GetBackgroundDrawList()->AddRect(min, max, col);
 }
+
+void SpriteRenderer::Render(sf::RenderWindow* _window)
+{
+	Component::Render(_window);
+
+	const auto position = GetOwner()->GetPosition();
+	Sprite.setPosition(position.x, position.y);
+
+	_window->draw(Sprite);
+}
+
+void SpriteRenderer::setTexture(std::string link)
+{
+	texture.loadFromFile(link);
+	Sprite = sf::Sprite(texture);
+}

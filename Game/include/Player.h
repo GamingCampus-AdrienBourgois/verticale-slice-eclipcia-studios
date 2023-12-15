@@ -4,9 +4,9 @@
 #include "InputModule.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
-#include "SpriteRenderer.h"
+#include "RectangleShapeRenderer.h"
 #include <iostream>
-#include <SpriteRenderer.h>
+#include <RectangleShapeRenderer.h>
 #include "Attack.h"
 
 
@@ -19,20 +19,7 @@ public:
 	sf::Sprite sprite;
 	SpriteRenderer* spriteRenderer = nullptr;
     void Start() override
-    {
-        if (texture.loadFromFile("../Assets/boss.png"))
-        {
-            sprite.setTexture(texture);
-            sprite.setPosition(GetOwner()->GetPosition().x, GetOwner()->GetPosition().y);
-            // Create and set the SpriteRenderer component
-            spriteRenderer = GetOwner()->CreateComponent<SpriteRenderer>();
-            spriteRenderer->SetSprite(&sprite);
-        }
-        else
-        {
-            std::cerr << "Failed to load player texture!" << std::endl;
-        }
-    }
+    {    }
 
     void Update(const float _delta_time) override
     {
