@@ -6,7 +6,8 @@
 class Enemy : public Component
 {
 public:
-
+	
+	
 	void Update(const float _delta_time) override
 	{
 		GameObject* player = GetOwner()->GetScene()->FindGameObject("Player");
@@ -40,10 +41,12 @@ public:
 		CheckGroundCollisions();
 		CheckPlayerCollision();
 
+
 	}
 
+
 private:
-	float shootCooldown;
+	
 	float shootTimer;
 	std::vector<GameObject*> projectiles;
 	float speed = 120.0f;

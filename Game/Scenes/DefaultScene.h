@@ -7,12 +7,13 @@
 #include "Scene.h"
 #include "SquareCollider.h"
 
+
 class DefaultScene final : public Scene
 {
 public:
     DefaultScene() : Scene("DefaultScene")
     {
-        GameObject* player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 55.f), sf::Color::White, *this);
+        GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 55.f), sf::Color::White, *this);
         player->CreateComponent<Player>();
         player->CreateComponent<SquareCollider>();
 
@@ -22,8 +23,6 @@ public:
         GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 750.f), Maths::Vector2<float>(1800.f, 60.f), sf::Color(0, 0, 0, 0), *this);
         ground->CreateComponent<SquareCollider>();
 
-
-        // Créer les plateformes
         CreateGroundPlatforms();
         // Créer les murs
 

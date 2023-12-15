@@ -7,11 +7,17 @@
 #include "SpriteRenderer.h"
 #include <iostream>
 #include <SpriteRenderer.h>
+#include "Attack.h"
 
 
 class Player : public Component
 {
+
 public:
+
+	sf::Texture texture;
+	sf::Sprite sprite;
+	SpriteRenderer* spriteRenderer = nullptr;
     void Start() override
     {
         if (texture.loadFromFile("../Assets/boss.png"))
@@ -59,9 +65,9 @@ public:
         {
             position.x = 0.0f;
         }
-        else if (position.x > windowWidth)
+        else if (position.x + GetOwner()->GetComponent<SquareCollider>()->GetWidth() > windowWidth)
         {
-            position.x = windowWidth;
+            position.x = windowWidth - GetOwner()->GetComponent<SquareCollider>()->GetWidth();
         }
 
         // Ajuster la position verticale
@@ -85,6 +91,7 @@ public:
 
         // Update the sprite position based on the player's position
         sprite.setPosition(GetOwner()->GetPosition().x, GetOwner()->GetPosition().y);
+
         //HandlePlatformCollisions();
     }
 
@@ -95,15 +102,14 @@ public:
     }
 
 private:
+    
     float speed = 200.0f;
     float gravity = 670.0f;
     float jumpForce = 670.0f;
     float pushBackAmount = 10.0f;
     Maths::Vector2<float> velocity = { 0.0f, 0.0f };
     bool isGrounded = true;
-    sf::Texture texture;
-    sf::Sprite sprite;
-    SpriteRenderer* spriteRenderer = nullptr;
+   
 
     // Function to check collisions with the ground
     bool CheckGroundCollisions()
@@ -167,6 +173,7 @@ private:
             }
         }
     }
+
     void HandlePlatformCollisions()
     {
         SquareCollider* playerCollider = GetOwner()->GetComponent<SquareCollider>();
