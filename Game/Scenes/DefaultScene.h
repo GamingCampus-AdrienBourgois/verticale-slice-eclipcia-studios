@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "RectangleShapeRenderer.h"
+#include "RectangleShapeRenderer.cpp"
 #include "Scene.h"
 #include "SquareCollider.h"
 
@@ -13,7 +14,12 @@ class DefaultScene final : public Scene
 public:
     DefaultScene() : Scene("DefaultScene")
     {
-        GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player1.png", 1.0f, 1.0f);
+        int frameCount = 8;
+        int currentFrame = 0;
+        sf::Clock animationClock;
+        float frameDuration = 0.1f;
+
+        GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player.png", 1.0f, 1.0f);
         player->CreateComponent<Player>();
         player->CreateComponent<SquareCollider>();
 
@@ -25,6 +31,18 @@ public:
 
         CreateGroundPlatforms();
         // Créer les murs
+
+        // Mise à jour de l'animation
+        if (animationClock.getElapsedTime().asSeconds() > frameDuration)
+        {
+            // Passage à la frame suivante
+            currentFrame = (currentFrame + 1) % frameCount;
+            frameRect.left = currentFrame * 32; // Ajustez 32 en fonction de la largeur de chaque image
+            sprite.setTextureRect(frameRect);
+
+            // Réinitialisation de l'horloge
+            animationClock.restart();
+        }
 
 
     }

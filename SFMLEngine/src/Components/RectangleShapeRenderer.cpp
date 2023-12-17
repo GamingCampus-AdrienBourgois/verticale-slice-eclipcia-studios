@@ -57,3 +57,10 @@ void SpriteRenderer::setTexture(std::string link)
 	texture.loadFromFile(link);
 	Sprite = sf::Sprite(texture);
 }
+
+void SpriteRenderer::setTextureRect(std::string link)
+{
+	texture.loadFromFile(link);
+	Sprite = sf::Sprite(texture);
+	Sprite.setTextureRect(frameRect(0, 0, 32, 32));
+}

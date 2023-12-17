@@ -27,8 +27,10 @@ class SpriteRenderer : public RectangleShapeRenderer
 public:
 	sf::Texture texture;
 	sf::Sprite Sprite;
+	sf::IntRect frameRect(int w, int x, int y, int z);
 
 	void setTexture(std::string);
+	void setTextureRect(std::string);
 	void Render(sf::RenderWindow* _window) override;
 };
 

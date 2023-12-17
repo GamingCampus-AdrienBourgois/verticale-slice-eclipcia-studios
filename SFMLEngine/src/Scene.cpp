@@ -148,6 +148,29 @@ GameObject* Scene::CreateGameObject(const std::string& _name, const int _health,
 	return game_object;
 }
 
+GameObject* Scene::CreateGameObjectPlayer(const std::string& _name, const int _health, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName, std::string asset, float width, float height)
+{
+	GameObject* const game_object = new GameObject();
+	game_object->SetName(_name);
+	game_object->SetPosition(_position);
+	game_object->SetScene(this);
+	gameObjects.push_back(game_object);
+
+	Health* objectHealth = game_object->CreateComponent<Health>();
+	objectHealth->SetDefaultHealth(_health);
+
+	//ajoute un shaperanderer
+	SpriteRenderer* shapeRenderer = game_object->CreateComponent<SpriteRenderer>();
+	shapeRenderer->setTextureRect(asset);
+	shapeRenderer->Sprite.setScale(width, height);
+
+	SquareCollider* square_collider = game_object->CreateComponent<SquareCollider>();
+	square_collider->SetWidth(shapeRenderer->texture.getSize().x);
+	square_collider->SetHeight(shapeRenderer->texture.getSize().y);
+
+	return game_object;
+}
+
 GameObject* Scene::CreateGameObject2(const std::string& _name, const int _health, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName)
 {
 	GameObject* const game_object = new GameObject();
