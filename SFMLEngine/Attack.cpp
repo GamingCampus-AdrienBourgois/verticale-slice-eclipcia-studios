@@ -1,6 +1,39 @@
 #include "Attack.h"
 
-void Sword::Update(float deltaTime)
+Attack::Attack(int damageAmount, float multiplierAmount) : damageAmount(damageAmount), multiplierAmount(multiplierAmount), defaultDamageAmount(damageAmount){}
+
+void Attack::SetDefaultDamage(int defaultDamage)
+{
+    damageAmount = defaultDamage;
+}
+
+int Attack::GetCurrentDamage() const
+{
+    return damageAmount;
+}
+
+float Attack::GetCurrentMultiplier() const
+{
+    return multiplierAmount;
+}
+
+void Attack::MultiplyDamage(float multiplierAmount)
+{
+    damageAmount *= multiplierAmount;
+}
+
+void Attack::Attacking(GameObject* enemy)
+{
+    enemy->GetComponent<Health>()->TakeDamage(damageAmount);
+}
+
+
+
+
+
+
+
+void Attack::Update(float deltaTime)
 {
     if (isSwinging)
     {
@@ -9,7 +42,7 @@ void Sword::Update(float deltaTime)
     }
 }
 
-void Sword::Swing()
+void Attack::Swing()
 {
     isSwinging = true;
 
