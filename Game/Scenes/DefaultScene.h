@@ -26,8 +26,14 @@ public:
         player->CreateComponent<Player>();
         player->CreateComponent<SquareCollider>();
 
-        GameObject* enemy1 = CreateGameObject("Enemy", 50, 10.0f, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
+        GameObject* enemy1 = CreateGameObject("Enemy", 50, 10.0f, Maths::Vector2<float>(400.f, 400.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
         enemy1->CreateComponent<Enemy>();
+
+        GameObject* enemy2 = CreateGameObject("Enemy", 50, 10.0f, Maths::Vector2<float>(1600.f, 400.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
+        enemy2->CreateComponent<Enemy>();
+
+        GameObject* enemy3 = CreateGameObject("Enemy", 50, 10.0f, Maths::Vector2<float>(1200.f, 400.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
+        enemy3->CreateComponent<Enemy>();
 
         GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 750.f), Maths::Vector2<float>(1800.f, 60.f), sf::Color(0, 0, 0, 0), *this);
         ground->CreateComponent<SquareCollider>();

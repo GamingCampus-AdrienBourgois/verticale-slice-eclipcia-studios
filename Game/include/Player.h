@@ -23,9 +23,10 @@ public:
     void Update(const float _delta_time) override
     {
 
-        Maths::Vector2<float> position = GetOwner()->GetPosition();
+        // Obtient tous les GameObjects nommés "Enemy"
+        std::vector<GameObject*> enemies = GetEnemies();
 
-        Maths::Vector2<float> enemyPosition = GetOwner()->GetScene()->FindGameObject("Enemy")->GetPosition();
+        Maths::Vector2<float> position = GetOwner()->GetPosition();
 
         if (InputModule::GetKey(sf::Keyboard::D))
         {
@@ -39,16 +40,21 @@ public:
         // Detecte si la touche d'attaque est appuyee
         if (InputModule::GetKeyDown(sf::Keyboard::Space))
         {
-            const float distanceThreshold = 200.0f; // Distance souhaitée
-
-            float distanceX = std::abs(position.x - enemyPosition.x);
-            float distanceY = std::abs(position.y - enemyPosition.y);
-
-            // Si la distance entre le joueur et l'ennemie est bonne, inflige des degats
-            if (distanceX <= distanceThreshold && distanceY <= distanceThreshold)
+            
+            // Parcourt tous les ennemis
+            for (GameObject* enemy : enemies)
             {
-                DealDamage();
+                Maths::Vector2<float> enemyPosition = enemy->GetPosition();
+                float distanceX = std::abs(position.x - enemyPosition.x);
+                float distanceY = std::abs(position.y - enemyPosition.y);
+
+                // Si la distance entre le joueur et l'ennemie est bonne, inflige des degats
+                if (distanceX <= distanceThreshold && distanceY <= distanceThreshold)
+                {
+                    DealDamage(enemy);
+                }
             }
+            
         }
 
         // Gere les mouvements verticaux (gravite et sauts)
@@ -85,15 +91,23 @@ public:
         // Verifie s'il y a des collisions avec les ennemies
         if (CheckEnemyCollision())
         {
-            // S'il y a collision, le joueur est pousse vers en arriere ou en avant en fonction de sa position par rapport a l'ennemi
-            if (position.x > enemyPosition.x)
+            // Parcourt tous les ennemis
+            for (GameObject* enemy : enemies)
             {
-                position.x += pushBackAmount;
+                Maths::Vector2<float> enemyPosition = enemy->GetPosition();
+
+                // S'il y a collision, le joueur est pousse vers en arriere ou en avant en fonction de sa position par rapport a l'ennemi
+                if (position.x > enemyPosition.x)
+                {
+                    position.x += pushBackAmount;
+                }
+                else
+                {
+                    position.x -= pushBackAmount;
+                }
+
             }
-            else
-            {
-                position.x -= pushBackAmount;
-            }
+            
             
             // Met le joueur à sa nouvelle position
             GetOwner()->SetPosition(position);
@@ -106,7 +120,11 @@ public:
         }
 
         CheckGroundCollisions();
-        CheckEnemyCollision();
+        if (!enemies.empty())
+        {
+            CheckEnemyCollision();
+        }
+        
 
         CheckDeath();
 
@@ -132,6 +150,7 @@ private:
     bool isGrounded = true; // Renvoie si le joueur touche le sol
     bool isCollidingWithPlatform = false; // Renvoie si le joueur touche une plateforme
     bool attacking;
+    const float distanceThreshold = 200.0f; // Distance maximale pour attaquer un ennemie
    
     // Fonction pour verifier les collisions avec le sol
     bool CheckGroundCollisions()
@@ -259,10 +278,9 @@ private:
     }
 
     // Fonction pour inflige des degats a l'ennemie
-    void DealDamage()
+    void DealDamage(GameObject* enemy)
     {
         // ------------------------------------------------ Changer pour avoir l'ennemie le plus proche / ennemie vise ------------------------------------------------
-        GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
         GetOwner()->GetComponent<Attack>()->Attacking(enemy);
     }
 
@@ -273,6 +291,22 @@ private:
         {
             GetOwner()->Destroy();
         }
+    }
+
+    // Fonction pour obtenir tous les GameObjects nommés "Enemy" dans la scène
+    std::vector<GameObject*> GetEnemies()
+    {
+        std::vector<GameObject*> enemies;
+
+        for (GameObject* gameObject : GetOwner()->GetScene()->GetGameObjects())
+        {
+            if (gameObject->GetName() == "Enemy")
+            {
+                enemies.push_back(gameObject);
+            }
+        }
+
+        return enemies;
     }
 
 };

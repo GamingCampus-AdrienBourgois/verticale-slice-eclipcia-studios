@@ -91,7 +91,9 @@ private:
 		if (GetOwner()->GetComponent<Health>()->IsDead() == true)
 		{
 			// Detruit/Supprime l'ennemie s'il est mort
-			GetOwner()->Destroy();
+			//GetOwner()->Destroy(); // Crash si espace est reappuyer apres avoir tuer un ennemie
+			//GetOwner()->~GameObject(); // Crash au dernier ennemie tuer
+			GetOwner()->GetScene()->DestroyGameObject(GetOwner()); // Crash au dernier ennemie tuer
 		}
 	}
 
