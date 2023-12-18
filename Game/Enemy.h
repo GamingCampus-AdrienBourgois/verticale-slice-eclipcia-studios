@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "InputModule.h"
 #include "Projectile.h"
+#include "include/Components/SquareCollider.h"
 
 class Enemy : public Component
 {
@@ -26,21 +27,22 @@ public:
 		{
 			enemyPosition.x += speed * _delta_time;
 		}
-		// Handle vertical movement (gravity and jumping)
-		velocity.y += gravity * _delta_time; // Apply gravity
+		if (InputModule::GetKeyDown(sf::Keyboard::Space))
+		{
+			GetOwner()->GetComponent<Health>()->TakeDamage(10);
+		}
 
-		//if (InputModule::GetKey(sf::Keyboard::Z) && isGrounded)
-		//{
-		//	velocity.y = -jumpForce;
-		//}
+
+		// Apply gravity
+		velocity.y += gravity * _delta_time;
 
 		enemyPosition.y += velocity.y * _delta_time;
 
 		GetOwner()->SetPosition(enemyPosition);
 
 		CheckGroundCollisions();
-		CheckPlayerCollision();
 
+		CheckDeath();
 
 	}
 
@@ -87,21 +89,18 @@ private:
 		isGrounded = false;
 		return false;
 	}
-	void CheckPlayerCollision()
+	void CheckDeath()
 	{
-		GameObject* player = GetOwner()->GetScene()->FindGameObject("Player");
-
-		if (player)
+		if (GetOwner()->GetComponent<Health>()->IsDead() == true)
 		{
-			SquareCollider* squareColliderEnemy = GetOwner()->GetComponent<SquareCollider>();
-			SquareCollider* squareColliderPlayer = player->GetComponent<SquareCollider>();
-
-			if (squareColliderEnemy && squareColliderPlayer && SquareCollider::IsColliding(*squareColliderEnemy, *squareColliderPlayer))
-			{
-				// Collision detected with player, take appropriate action
-				GetOwner()->GetScene()->Shutdown(); // Shutdown the game (replace this with your actual shutdown logic)
-			}
+			GetOwner()->Destroy();
 		}
+			
+
+		//if (GetOwner()->GetComponent<Health>()->GetCurrentHealth() <= 0)
+		//{
+		//	GetOwner()->GetComponent<Health>()->IsDead();
+		//}
 	}
 
 };

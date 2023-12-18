@@ -106,13 +106,24 @@ void GameObject::OnDisable() const
 	}
 }
 
-void GameObject::Destroy() const
+void GameObject::Destroy()
 {
+	// Notify components that the object is about to be destroyed
+	OnDisable();
+
+	// Notify components that the object is being destroyed
 	for (Component* const& component : components)
 	{
 		component->Destroy();
 	}
+
+	// Clear the components vector
+	components.clear();
+
+	// Optionally, set the scene pointer to null
+	scene = nullptr;
 }
+
 
 void GameObject::Finalize() const
 {

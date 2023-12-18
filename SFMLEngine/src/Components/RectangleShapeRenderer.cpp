@@ -1,7 +1,7 @@
 #include "Components/RectangleShapeRenderer.h"
 
-#include <imgui-SFML.h>
-#include <imgui.h>
+//#include <imgui-SFML.h>
+//#include <imgui.h>
 
 #include "SFML/Graphics/Shape.hpp"
 
@@ -37,9 +37,9 @@ void RectangleShapeRenderer::OnDebug()
 
 	const sf::Vector2f min = shape->getPosition();
 	const sf::Vector2f max = min + shape->getSize();
-	const ImU32 col = ImGui::GetColorU32(IM_COL32(0, 0, 0, 0));
+	//const ImU32 col = ImGui::GetColorU32(IM_COL32(0, 0, 0, 0));
 
-	ImGui::GetBackgroundDrawList()->AddRect(min, max, col);
+	//ImGui::GetBackgroundDrawList()->AddRect(min, max, col);
 }
 
 void SpriteRenderer::Render(sf::RenderWindow* _window)

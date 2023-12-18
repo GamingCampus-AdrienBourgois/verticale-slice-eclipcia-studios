@@ -1,4 +1,5 @@
 #include "Components/Health.h"
+#include "Components/RectangleShapeRenderer.h"
 
 Health::Health(int maxHealth) : maxHealth(maxHealth), currentHealth(maxHealth) {}
 
@@ -38,5 +39,5 @@ int Health::GetMaxHealth() const
 
 bool Health::IsDead() const
 {
-    return currentHealth <= 0;
+    return currentHealth == 0;    
 }

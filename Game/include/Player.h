@@ -1,4 +1,3 @@
-// Player.h
 #pragma once
 #include "Component.h"
 #include "InputModule.h"
@@ -34,6 +33,10 @@ public:
         {
             position.x -= speed * _delta_time;
         }
+        //if (InputModule::GetKey(sf::Keyboard::Space))
+        //{
+        //    DealDamage();
+        //}
 
         // Handle vertical movement (gravity and jumping)
         velocity.y += gravity * _delta_time;
@@ -96,6 +99,7 @@ private:
     float pushBackAmount = 10.0f;
     Maths::Vector2<float> velocity = { 0.0f, 0.0f };
     bool isGrounded = true;
+    bool isCollidingWithPlatform = false;
    
 
     // Function to check collisions with the ground
@@ -144,6 +148,7 @@ private:
         isGrounded = false;
         return false;
     }
+
     bool CheckEnemyCollision()
     {
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
@@ -215,7 +220,14 @@ private:
         }
 
         // Réinitialiser le drapeau pour la prochaine itération.
-
     }
-    bool isCollidingWithPlatform = false;
+
+    bool attacking;
+
+    void DealDamage()
+    {
+        GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
+        enemy->GetComponent<Health>()->TakeDamage(10);
+    }
+
 };

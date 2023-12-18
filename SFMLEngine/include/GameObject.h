@@ -55,7 +55,7 @@ public:
 	void OnEnable() const;
 	void OnDisable() const;
 
-	void Destroy() const;
+	void Destroy();
 	void Finalize() const;
 
 	void SetScene(Scene* _scene);
