@@ -97,8 +97,11 @@ public:
             
             // Met le joueur à sa nouvelle position
             GetOwner()->SetPosition(position);
+
+            GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
+
             // Inflige 10 de degats au joueur
-            GetOwner()->GetComponent<Health>()->TakeDamage(10);
+            enemy->GetComponent<Attack>()->Attacking(GetOwner());
         }
 
         CheckGroundCollisions();
@@ -258,7 +261,7 @@ private:
     void DealDamage()
     {
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
-        enemy->GetComponent<Health>()->TakeDamage(10);
+        GetOwner()->GetComponent<Attack>()->Attacking(enemy);
     }
 
     // Vérifie la mort de l'ennemie
