@@ -98,6 +98,7 @@ public:
             // Met le joueur à sa nouvelle position
             GetOwner()->SetPosition(position);
 
+            // ------------------------------------------------ Changer pour avoir l'ennemie le plus proche / ennemie vise ------------------------------------------------
             GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
 
             // Inflige 10 de degats au joueur
@@ -260,6 +261,7 @@ private:
     // Fonction pour inflige des degats a l'ennemie
     void DealDamage()
     {
+        // ------------------------------------------------ Changer pour avoir l'ennemie le plus proche / ennemie vise ------------------------------------------------
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
         GetOwner()->GetComponent<Attack>()->Attacking(enemy);
     }
