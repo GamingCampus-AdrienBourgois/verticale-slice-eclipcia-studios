@@ -35,6 +35,8 @@ public:
         {
             position.x -= speed * _delta_time;
         }
+
+        // Detecte si la touche d'attaque est appuyee
         if (InputModule::GetKeyDown(sf::Keyboard::Space))
         {
             const float distanceThreshold = 200.0f; // Distance souhaitée
@@ -42,14 +44,14 @@ public:
             float distanceX = std::abs(position.x - enemyPosition.x);
             float distanceY = std::abs(position.y - enemyPosition.y);
 
+            // Si la distance entre le joueur et l'ennemie est bonne, inflige des degats
             if (distanceX <= distanceThreshold && distanceY <= distanceThreshold)
             {
                 DealDamage();
             }
-                
         }
 
-        // Handle vertical movement (gravity and jumping)
+        // Gere les mouvements verticaux (gravite et sauts)
         velocity.y += gravity * _delta_time;
 
         if (InputModule::GetKey(sf::Keyboard::Z) && isGrounded)
@@ -80,9 +82,10 @@ public:
 
         GetOwner()->SetPosition(position);
 
+        // Verifie s'il y a des collisions avec les ennemies
         if (CheckEnemyCollision())
         {
-            // If there is a collision with the enemy, push the player a bit
+            // S'il y a collision, le joueur est pousse vers en arriere ou en avant en fonction de sa position par rapport a l'ennemi
             if (position.x > enemyPosition.x)
             {
                 position.x += pushBackAmount;
@@ -92,7 +95,9 @@ public:
                 position.x -= pushBackAmount;
             }
             
+            // Met le joueur à sa nouvelle position
             GetOwner()->SetPosition(position);
+            // Inflige 10 de degats au joueur
             GetOwner()->GetComponent<Health>()->TakeDamage(10);
         }
 
@@ -101,7 +106,7 @@ public:
 
         CheckDeath();
 
-        // Update the sprite position based on the player's position
+        // Met à jour la position du Sprite en se basant sur la position du joueur
         sprite.setPosition(GetOwner()->GetPosition().x, GetOwner()->GetPosition().y);
 
         //HandlePlatformCollisions();
@@ -109,22 +114,22 @@ public:
 
     void Render(sf::RenderWindow* _window)  override
     {
-        // Replace this with your actual rendering code
+        // Dessine le Sprite
         _window->draw(sprite);
     }
 
 private:
     
-    float speed = 200.0f;
-    float gravity = 670.0f;
-    float jumpForce = 670.0f;
-    float pushBackAmount = 200.0f;
-    Maths::Vector2<float> velocity = { 0.0f, 0.0f };
-    bool isGrounded = true;
-    bool isCollidingWithPlatform = false;
+    float speed = 200.0f; // Vitesse de deplacement
+    float gravity = 670.0f; // Gravite
+    float jumpForce = 670.0f; // Force de saut
+    float pushBackAmount = 200.0f; // Distance auquel le joueur est repousse quand il y a contact avec un ennemi
+    Maths::Vector2<float> velocity = { 0.0f, 0.0f }; // Velocite pour le saut et la gravite
+    bool isGrounded = true; // Renvoie si le joueur touche le sol
+    bool isCollidingWithPlatform = false; // Renvoie si le joueur touche une plateforme
+    bool attacking;
    
-
-    // Function to check collisions with the ground
+    // Fonction pour verifier les collisions avec le sol
     bool CheckGroundCollisions()
     {
         SquareCollider* squareColliderA = GetOwner()->GetComponent<SquareCollider>();
@@ -135,11 +140,11 @@ private:
         {
             SquareCollider* squareColliderB = ground->GetComponent<SquareCollider>();
 
+            // Teste si le joueur est en collision avec le sol
             if (squareColliderA && squareColliderB && SquareCollider::IsColliding(*squareColliderA, *squareColliderB))
             {
-                // Le joueur est en collision avec le sol
 
-                // Calculer la position de contact sur le sol
+                // Calcule la position de contact sur le sol
                 float newY = ground->GetPosition().y - squareColliderB->GetHeight() / 2.0f - squareColliderA->GetHeight() / 2.0f;
 
                 // Arrête la chute
@@ -151,14 +156,16 @@ private:
                 return true;
             }
         }
+        // Parcourt toutes les Object de la scene
         for (GameObject* platform : GetOwner()->GetScene()->GetGameObjects())
         {
+            // Verifie si l'object est une plateforme
             if (platform->GetName().find("Platform") != std::string::npos)
             {
                 SquareCollider* squareColliderPlatform = platform->GetComponent<SquareCollider>();
                 if (squareColliderA && squareColliderPlatform && SquareCollider::IsColliding(*squareColliderA, *squareColliderPlatform))
                 {
-                    // Player is colliding with a platform
+                    // Le joueur est en collision avec la plateforme
                     float newY = platform->GetPosition().y - squareColliderPlatform->GetHeight() / 2.0f - squareColliderA->GetHeight() / 2.0f;
                     velocity.y = 0.0f;
                     isGrounded = true;
@@ -171,19 +178,21 @@ private:
         return false;
     }
 
+    // Verifie les collisions avec les ennemies
     bool CheckEnemyCollision()
     {
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
 
+        // Verifie s'il y a un ennemie
         if (enemy)
         {
             SquareCollider* squareColliderPlayer = GetOwner()->GetComponent<SquareCollider>();
             SquareCollider* squareColliderEnemy = enemy->GetComponent<SquareCollider>();
 
+            // Verifie si le joueur et l'ennemie sont en collision
             if (squareColliderPlayer && squareColliderEnemy && SquareCollider::IsColliding(*squareColliderPlayer, *squareColliderEnemy))
             {
-                // Collision detected with enemy, take appropriate action
-                return true; // Shutdown the game (replace this with your actual shutdown logic)
+                return true;
             }
         }
     }
@@ -245,8 +254,7 @@ private:
         // Réinitialiser le drapeau pour la prochaine itération.
     }
 
-    bool attacking;
-
+    // Fonction pour inflige des degats a l'ennemie
     void DealDamage()
     {
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");

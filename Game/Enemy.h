@@ -19,6 +19,7 @@ public:
 
 		float positionDif = playerPosition.x - enemyPosition.x;
 
+		// Verifie la position du joueur et met a jour la position de l'ennemie pour le suivre
 		if (playerPosition.x < enemyPosition.x)
 		{
 			enemyPosition.x -= speed * _delta_time;
@@ -28,9 +29,10 @@ public:
 			enemyPosition.x += speed * _delta_time;
 		}
 
-		// Apply gravity
+		// Calcule la velocite
 		velocity.y += gravity * _delta_time;
 
+		// Applique la gravité
 		enemyPosition.y += velocity.y * _delta_time;
 
 		GetOwner()->SetPosition(enemyPosition);
@@ -46,13 +48,13 @@ private:
 	
 	float shootTimer;
 	std::vector<GameObject*> projectiles;
-	float speed = 120.0f;
-	float gravity = 500.0f;
+	float speed = 120.0f; // Vitesse de deplacement
+	float gravity = 500.0f; // Gravite
 
 	Maths::Vector2<float> velocity = { 0.0f, 0.0f };
-	bool isGrounded = true;
+	bool isGrounded = true; // Renvoie si l'ennemie touche le sol
 
-	// Function to check collisions with the ground
+	// Fonction pour verifier si l'ennemie touche le sol
 	bool CheckGroundCollisions()
 	{
 		SquareCollider* squareColliderA = GetOwner()->GetComponent<SquareCollider>();
