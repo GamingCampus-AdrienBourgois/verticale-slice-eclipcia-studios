@@ -25,6 +25,8 @@ public:
 
         Maths::Vector2<float> position = GetOwner()->GetPosition();
 
+        Maths::Vector2<float> enemyPosition = GetOwner()->GetScene()->FindGameObject("Enemy")->GetPosition();
+
         if (InputModule::GetKey(sf::Keyboard::D))
         {
             position.x += speed * _delta_time;
@@ -35,7 +37,16 @@ public:
         }
         if (InputModule::GetKeyDown(sf::Keyboard::Space))
         {
-            DealDamage();
+            const float distanceThreshold = 200.0f; // Distance souhaitée
+
+            float distanceX = std::abs(position.x - enemyPosition.x);
+            float distanceY = std::abs(position.y - enemyPosition.y);
+
+            if (distanceX <= distanceThreshold && distanceY <= distanceThreshold)
+            {
+                DealDamage();
+            }
+                
         }
 
         // Handle vertical movement (gravity and jumping)
@@ -72,7 +83,15 @@ public:
         if (CheckEnemyCollision())
         {
             // If there is a collision with the enemy, push the player a bit
-            position.x += pushBackAmount;
+            if (position.x > enemyPosition.x)
+            {
+                position.x += pushBackAmount;
+            }
+            else
+            {
+                position.x -= pushBackAmount;
+            }
+            
             GetOwner()->SetPosition(position);
             GetOwner()->GetComponent<Health>()->TakeDamage(10);
         }
@@ -169,6 +188,7 @@ private:
         }
     }
 
+    // ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ----------------
     void HandlePlatformCollisions()
     {
         SquareCollider* playerCollider = GetOwner()->GetComponent<SquareCollider>();
