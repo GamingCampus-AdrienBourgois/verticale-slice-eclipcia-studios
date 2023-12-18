@@ -5,6 +5,7 @@
 #include "Components/RectangleShapeRenderer.h"
 #include "Components/SquareCollider.h"
 #include "Components/Health.h"
+#include "../Attack.h"
 
 class Scene
 {
@@ -33,7 +34,7 @@ public:
 
 	const std::string& GetName() const;
 
-	GameObject* CreateGameObject(const std::string& _name, const int _health, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName, std::string asset, float width, float height);
+	GameObject* CreateGameObject(const std::string& _name, const int _health, const float _damage, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName, std::string asset, float width, float height);
 	GameObject* CreateGameObject2(const std::string& _name, const int _health, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName);
 	GameObject* CreatePlatformObject(const std::string& _name, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName);
 	void DestroyGameObject(const GameObject* _game_object);

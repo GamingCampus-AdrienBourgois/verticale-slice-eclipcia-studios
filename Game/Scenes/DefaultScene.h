@@ -22,11 +22,11 @@ public:
         // ------------------------------------------------------------------------------------------------
         /*GameObject*player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player.png", 1.0f, 1.0f);*/
         // ------------------------------------------------------------------------------------------------
-        GameObject* player = CreateGameObject("Player", 100, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player1.png", 1.0f, 1.0f);
+        GameObject* player = CreateGameObject("Player", 100, 10.0f, Maths::Vector2<float>(200.f, 200.f), Maths::Vector2<float>(50.f, 75.f), sf::Color::White, *this, "Assets/player1.png", 1.0f, 1.0f);
         player->CreateComponent<Player>();
         player->CreateComponent<SquareCollider>();
 
-        GameObject* enemy1 = CreateGameObject("Enemy", 50, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
+        GameObject* enemy1 = CreateGameObject("Enemy", 50, 10.0f, Maths::Vector2<float>(400.f, 100.f), Maths::Vector2<float>(100.f, 100.f), sf::Color::Red, *this, "Assets/boss1.png", 1.5f, 1.5f);
         enemy1->CreateComponent<Enemy>();
 
         GameObject* ground = CreatePlatformObject("Ground", Maths::Vector2<float>(0.f, 750.f), Maths::Vector2<float>(1800.f, 60.f), sf::Color(0, 0, 0, 0), *this);

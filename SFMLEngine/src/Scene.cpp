@@ -125,7 +125,7 @@ const std::string& Scene::GetName() const
 	return name;
 }
 
-GameObject* Scene::CreateGameObject(const std::string& _name, const int _health, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName, std::string asset, float width, float height)
+GameObject* Scene::CreateGameObject(const std::string& _name, const int _health, const float _damage, const Maths::Vector2<float> _position, const Maths::Vector2<float> _size, const sf::Color _color, const Scene& _sceneName, std::string asset, float width, float height)
 {
 	GameObject* const game_object = new GameObject();
 	game_object->SetName(_name);
@@ -144,6 +144,11 @@ GameObject* Scene::CreateGameObject(const std::string& _name, const int _health,
 	SquareCollider* square_collider = game_object->CreateComponent<SquareCollider>();
 	square_collider->SetWidth(shapeRenderer->texture.getSize().x);
 	square_collider->SetHeight(shapeRenderer->texture.getSize().y);
+
+	Attack* attack = game_object->CreateComponent<Attack>();
+	attack->SetDefaultDamage(_damage);
+	attack->SetDamageMultiplier(1.0f);
+
 
 	return game_object;
 }

@@ -7,7 +7,7 @@ class Attack : public Component
 {
 public:
 
-    Attack() : damageAmount(100), damageMultiplier(1.0f), defaultDamageAmount(100){}
+    Attack() : damageAmount(10.f), damageMultiplier(1.0f), defaultDamageAmount(10.f){}
     Attack(float damageAmount, float multiplierAmount);
 
     void SetDefaultDamage(float defaultDamage);
@@ -26,7 +26,7 @@ public:
 private:
     bool isSwinging = false;
     float swingDuration = 0.5f; // Durée de l'animation de balancement de l'épée
-    int damageAmount; // Nombre de degats
+    float damageAmount; // Nombre de degats
     float defaultDamageAmount; // Nombre de degats par defaut
     float damageMultiplier; // Multiplicateur de degats
 };
