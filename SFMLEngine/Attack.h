@@ -7,13 +7,15 @@ class Attack : public Component
 {
 public:
 
-    Attack() : damageAmount(100), multiplierAmount(1.0f), defaultDamageAmount(100){}
-    Attack(int damageAmount, float multiplierAmount);
+    Attack() : damageAmount(100), damageMultiplier(1.0f), defaultDamageAmount(100){}
+    Attack(float damageAmount, float multiplierAmount);
 
-    void SetDefaultDamage(int defaultDamage);
-    int GetCurrentDamage() const;
+    void SetDefaultDamage(float defaultDamage);
+    void SetCurrentDamage(float newDamage);
+    void SetDamageMultiplier(float newMultiplier);
+    float GetCurrentDamage() const;
     float GetCurrentMultiplier() const;
-    void MultiplyDamage(float multiplierAmount);
+    void MultiplyDamage(float damageMultiplier);
     void Attacking(GameObject* enemy);
 
 
@@ -25,6 +27,6 @@ private:
     bool isSwinging = false;
     float swingDuration = 0.5f; // Durée de l'animation de balancement de l'épée
     int damageAmount;
-    int defaultDamageAmount;
-    float multiplierAmount;
+    float defaultDamageAmount;
+    float damageMultiplier;
 };

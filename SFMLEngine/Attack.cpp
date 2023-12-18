@@ -1,20 +1,30 @@
 #include "Attack.h"
 
-Attack::Attack(int damageAmount, float multiplierAmount) : damageAmount(damageAmount), multiplierAmount(multiplierAmount), defaultDamageAmount(damageAmount){}
+Attack::Attack(float damageAmount, float multiplierAmount) : damageAmount(damageAmount), damageMultiplier(multiplierAmount), defaultDamageAmount(damageAmount){}
 
-void Attack::SetDefaultDamage(int defaultDamage)
+void Attack::SetDefaultDamage(float defaultDamage)
 {
     damageAmount = defaultDamage;
 }
 
-int Attack::GetCurrentDamage() const
+void Attack::SetCurrentDamage(float newDamage)
+{
+    damageAmount = newDamage;
+}
+
+void Attack::SetDamageMultiplier(float newMultiplier)
+{
+    damageMultiplier = newMultiplier;
+}
+
+float Attack::GetCurrentDamage() const
 {
     return damageAmount;
 }
 
 float Attack::GetCurrentMultiplier() const
 {
-    return multiplierAmount;
+    return damageMultiplier;
 }
 
 void Attack::MultiplyDamage(float multiplierAmount)
