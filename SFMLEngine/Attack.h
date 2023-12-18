@@ -26,7 +26,7 @@ public:
 private:
     bool isSwinging = false;
     float swingDuration = 0.5f; // Durée de l'animation de balancement de l'épée
-    int damageAmount;
-    float defaultDamageAmount;
-    float damageMultiplier;
+    int damageAmount; // Nombre de degats
+    float defaultDamageAmount; // Nombre de degats par defaut
+    float damageMultiplier; // Multiplicateur de degats
 };
