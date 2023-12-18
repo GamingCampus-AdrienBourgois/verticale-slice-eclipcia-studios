@@ -33,10 +33,10 @@ public:
         {
             position.x -= speed * _delta_time;
         }
-        //if (InputModule::GetKey(sf::Keyboard::Space))
-        //{
-        //    DealDamage();
-        //}
+        if (InputModule::GetKeyDown(sf::Keyboard::Space))
+        {
+            DealDamage();
+        }
 
         // Handle vertical movement (gravity and jumping)
         velocity.y += gravity * _delta_time;
@@ -74,10 +74,13 @@ public:
             // If there is a collision with the enemy, push the player a bit
             position.x += pushBackAmount;
             GetOwner()->SetPosition(position);
+            GetOwner()->GetComponent<Health>()->TakeDamage(10);
         }
 
         CheckGroundCollisions();
         CheckEnemyCollision();
+
+        CheckDeath();
 
         // Update the sprite position based on the player's position
         sprite.setPosition(GetOwner()->GetPosition().x, GetOwner()->GetPosition().y);
@@ -96,7 +99,7 @@ private:
     float speed = 200.0f;
     float gravity = 670.0f;
     float jumpForce = 670.0f;
-    float pushBackAmount = 10.0f;
+    float pushBackAmount = 200.0f;
     Maths::Vector2<float> velocity = { 0.0f, 0.0f };
     bool isGrounded = true;
     bool isCollidingWithPlatform = false;
@@ -228,6 +231,15 @@ private:
     {
         GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
         enemy->GetComponent<Health>()->TakeDamage(10);
+    }
+
+    // Vérifie la mort de l'ennemie
+    void CheckDeath()
+    {
+        if (GetOwner()->GetComponent<Health>()->IsDead() == true)
+        {
+            GetOwner()->Destroy();
+        }
     }
 
 };

@@ -27,11 +27,6 @@ public:
 		{
 			enemyPosition.x += speed * _delta_time;
 		}
-		if (InputModule::GetKeyDown(sf::Keyboard::Space))
-		{
-			GetOwner()->GetComponent<Health>()->TakeDamage(10);
-		}
-
 
 		// Apply gravity
 		velocity.y += gravity * _delta_time;
@@ -70,9 +65,7 @@ private:
 
 			if (squareColliderA && squareColliderB && SquareCollider::IsColliding(*squareColliderA, *squareColliderB))
 			{
-				// Le joueur est en collision avec le sol
-
-				// Calculer la position de contact sur le sol
+				// Calcule la position de contact sur le sol
 				float newY = ground->GetPosition().y - squareColliderB->GetHeight() / 2.0f - squareColliderA->GetHeight() / 2.0f;
 
 				// Arrête la chute
@@ -89,18 +82,15 @@ private:
 		isGrounded = false;
 		return false;
 	}
+
+	// Vérifie la mort de l'ennemie
 	void CheckDeath()
 	{
 		if (GetOwner()->GetComponent<Health>()->IsDead() == true)
 		{
+			// Detruit/Supprime l'ennemie s'il est mort
 			GetOwner()->Destroy();
 		}
-			
-
-		//if (GetOwner()->GetComponent<Health>()->GetCurrentHealth() <= 0)
-		//{
-		//	GetOwner()->GetComponent<Health>()->IsDead();
-		//}
 	}
 
 };
