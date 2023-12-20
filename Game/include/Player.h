@@ -5,7 +5,6 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "RectangleShapeRenderer.h"
 #include <iostream>
-#include <RectangleShapeRenderer.h>
 #include "Attack.h"
 
 
@@ -23,19 +22,19 @@ public:
     void Update(const float _delta_time) override
     {
 
-        // Obtient tous les GameObjects nommés "Enemy"
-        std::vector<GameObject*> enemies = GetEnemies();
-
         Maths::Vector2<float> position = GetOwner()->GetPosition();
 
-        if (InputModule::GetKey(sf::Keyboard::D))
+        if (InputModule::GetKey(sf::Keyboard::D) && canMoveRight)
         {
             position.x += speed * _delta_time;
         }
-        if (InputModule::GetKey(sf::Keyboard::Q))
+        if (InputModule::GetKey(sf::Keyboard::Q) && canMoveLeft)
         {
             position.x -= speed * _delta_time;
         }
+
+        // Obtient tous les GameObjects nommés "Enemy"
+        std::vector<GameObject*> enemies = GetEnemies();
 
         // Detecte si la touche d'attaque est appuyee
         if (InputModule::GetKeyDown(sf::Keyboard::Space))
@@ -67,8 +66,8 @@ public:
 
         position.y += velocity.y * _delta_time;
 
-        const float windowWidth = 1600.0f;
-        const float windowHeight = 800.0f;
+        const float windowWidth = 1920.0f;
+        const float windowHeight = 1080.0f;
         // Ajuster la position horizontale
         if (position.x < 0.0f)
         {
@@ -88,50 +87,47 @@ public:
 
         GetOwner()->SetPosition(position);
 
+        // Parcourt tous les ennemis
+        
         // Verifie s'il y a des collisions avec les ennemies
-        if (CheckEnemyCollision())
+        if (CheckEnemyCollision(enemies))
         {
-            // Parcourt tous les ennemis
             for (GameObject* enemy : enemies)
             {
+
                 Maths::Vector2<float> enemyPosition = enemy->GetPosition();
 
                 // S'il y a collision, le joueur est pousse vers en arriere ou en avant en fonction de sa position par rapport a l'ennemi
                 if (position.x > enemyPosition.x)
                 {
                     position.x += pushBackAmount;
+                    // Met le joueur à sa nouvelle position
+                    GetOwner()->SetPosition(position);
+                    // Inflige 10 de degats au joueur
+                    enemy->GetComponent<Attack>()->Attacking(GetOwner());
                 }
                 else
                 {
                     position.x -= pushBackAmount;
+                    // Met le joueur à sa nouvelle position
+                    GetOwner()->SetPosition(position);
+                    // Inflige 10 de degats au joueur
+                    enemy->GetComponent<Attack>()->Attacking(GetOwner());
                 }
 
             }
             
-            
-            // Met le joueur à sa nouvelle position
-            GetOwner()->SetPosition(position);
-
-            // ------------------------------------------------ Changer pour avoir l'ennemie le plus proche / ennemie vise ------------------------------------------------
-            GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
-
-            // Inflige 10 de degats au joueur
-            enemy->GetComponent<Attack>()->Attacking(GetOwner());
         }
 
-        CheckGroundCollisions();
-        if (!enemies.empty())
-        {
-            CheckEnemyCollision();
-        }
-        
+        CheckPlatformsCollisions();
+
+        CheckGroundCollisions();        
 
         CheckDeath();
 
         // Met à jour la position du Sprite en se basant sur la position du joueur
         sprite.setPosition(GetOwner()->GetPosition().x, GetOwner()->GetPosition().y);
 
-        //HandlePlatformCollisions();
     }
 
     void Render(sf::RenderWindow* _window)  override
@@ -142,95 +138,77 @@ public:
 
 private:
     
-    float speed = 200.0f; // Vitesse de deplacement
-    float gravity = 670.0f; // Gravite
-    float jumpForce = 670.0f; // Force de saut
-    float pushBackAmount = 200.0f; // Distance auquel le joueur est repousse quand il y a contact avec un ennemi
+    float speed = 300.0f; // Vitesse de deplacement
+    float gravity = 2000.0f; // Gravite
+    float jumpForce = 1100.0f; // Force de saut
+    float pushBackAmount = 50.0f; // Distance auquel le joueur est repousse quand il y a contact avec un ennemi
     Maths::Vector2<float> velocity = { 0.0f, 0.0f }; // Velocite pour le saut et la gravite
     bool isGrounded = true; // Renvoie si le joueur touche le sol
-    bool isCollidingWithPlatform = false; // Renvoie si le joueur touche une plateforme
+    //bool isCollidingWithPlatform = false; // Renvoie si le joueur touche une plateforme
     bool attacking;
     const float distanceThreshold = 200.0f; // Distance maximale pour attaquer un ennemie
+    bool canMoveLeft = true;
+    bool canMoveRight = true;
    
-    // Fonction pour verifier les collisions avec le sol
-    bool CheckGroundCollisions()
+    // Verifie les collisions avec les ennemies
+    bool CheckEnemyCollision(std::vector<GameObject*> enemies)
     {
-        SquareCollider* squareColliderA = GetOwner()->GetComponent<SquareCollider>();
-
-        GameObject* ground = GetOwner()->GetScene()->FindGameObject("Ground");
-
-        if (ground)
+        for (GameObject* enemy : enemies)
         {
-            SquareCollider* squareColliderB = ground->GetComponent<SquareCollider>();
-
-            // Teste si le joueur est en collision avec le sol
-            if (squareColliderA && squareColliderB && SquareCollider::IsColliding(*squareColliderA, *squareColliderB))
+            // Verifie s'il y a un ennemie
+            if (enemy)
             {
+                SquareCollider* squareColliderPlayer = GetOwner()->GetComponent<SquareCollider>();
+                SquareCollider* squareColliderEnemy = enemy->GetComponent<SquareCollider>();
 
-                // Calcule la position de contact sur le sol
-                float newY = ground->GetPosition().y - squareColliderB->GetHeight() / 2.0f - squareColliderA->GetHeight() / 2.0f;
-
-                // Arrête la chute
-                velocity.y = 0.0f;
-
-                // Le joueur est maintenant considéré comme étant sur le sol
-                isGrounded = true;
-
-                return true;
-            }
-        }
-        // Parcourt toutes les Object de la scene
-        for (GameObject* platform : GetOwner()->GetScene()->GetGameObjects())
-        {
-            // Verifie si l'object est une plateforme
-            if (platform->GetName().find("Platform") != std::string::npos)
-            {
-                SquareCollider* squareColliderPlatform = platform->GetComponent<SquareCollider>();
-                if (squareColliderA && squareColliderPlatform && SquareCollider::IsColliding(*squareColliderA, *squareColliderPlatform))
+                // Verifie si le joueur et l'ennemie sont en collision
+                if (squareColliderPlayer && squareColliderEnemy && SquareCollider::IsColliding(*squareColliderPlayer, *squareColliderEnemy))
                 {
-                    // Le joueur est en collision avec la plateforme
-                    float newY = platform->GetPosition().y - squareColliderPlatform->GetHeight() / 2.0f - squareColliderA->GetHeight() / 2.0f;
-                    velocity.y = 0.0f;
-                    isGrounded = true;
                     return true;
                 }
             }
         }
-        // Le joueur n'est pas en collision avec le sol
-        isGrounded = false;
         return false;
     }
 
-    // Verifie les collisions avec les ennemies
-    bool CheckEnemyCollision()
+    // Fonction pour vérifier les collisions avec le sol ou les plateformes
+    bool CheckGroundCollisions()
     {
-        GameObject* enemy = GetOwner()->GetScene()->FindGameObject("Enemy");
+        SquareCollider* playerCollider = GetOwner()->GetComponent<SquareCollider>();
 
-        // Verifie s'il y a un ennemie
-        if (enemy)
+        // Vérifier la collision avec le sol
+        GameObject* ground = GetOwner()->GetScene()->FindGameObject("Ground");
+
+        if (ground)
         {
-            SquareCollider* squareColliderPlayer = GetOwner()->GetComponent<SquareCollider>();
-            SquareCollider* squareColliderEnemy = enemy->GetComponent<SquareCollider>();
+            SquareCollider* groundCollider = ground->GetComponent<SquareCollider>();
 
-            // Verifie si le joueur et l'ennemie sont en collision
-            if (squareColliderPlayer && squareColliderEnemy && SquareCollider::IsColliding(*squareColliderPlayer, *squareColliderEnemy))
+            if (playerCollider && groundCollider && SquareCollider::IsColliding(*playerCollider, *groundCollider))
             {
+                // Collision avec le sol
+                velocity.y = 0.0f;
+                isGrounded = true;
+                //isCollidingWithPlatform = false; // Réinitialiser le drapeau de collision avec la plateforme
                 return true;
             }
         }
+
+        // Le joueur n'est pas en collision avec le sol ou une plateforme
+        isGrounded = false;
+        /*isCollidingWithPlatform = false;*/
+        return false;
     }
 
-    // ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ---------------- A REFAIRE ----------------
-    void HandlePlatformCollisions()
+    bool CheckPlatformsCollisions()
     {
         SquareCollider* playerCollider = GetOwner()->GetComponent<SquareCollider>();
 
         if (!playerCollider)
-            return;
+            return false;
 
         for (GameObject* platform : GetOwner()->GetScene()->GetGameObjects())
         {
-            if (platform->GetName().find("Platform") != std::string::npos)
+            if (platform->GetName() == "Platform")
             {
                 SquareCollider* platformCollider = platform->GetComponent<SquareCollider>();
 
@@ -244,24 +222,31 @@ private:
                     if (overlapX < overlapY)
                     {
                         // Ajuster la position horizontale
-                        if (playerCollider->GetLeft() < platformCollider->GetLeft())
-                            GetOwner()->Move(-overlapX, 0.0f);
-                        else
-                            GetOwner()->Move(overlapX, 0.0f);
+                        if (playerCollider->GetRight() > platformCollider->GetLeft())
+                        {
+                            canMoveRight = false;
+                            return true;
+                        }
+                        else if (playerCollider->GetLeft() > platformCollider->GetRight())
+                        {
+                            canMoveLeft = false;
+                            return true;
+                        }
                     }
                     else
                     {
                         // Ajuster la position verticale
-                        if (playerCollider->GetTop() < platformCollider->GetTop())
+                        if (playerCollider->GetBottom() < platformCollider->GetTop())
                         {
-                            GetOwner()->Move(0.0f, -overlapY);
+                            /*GetOwner()->Move(0.0f, -overlapY);*/
                             velocity.y = 0.0f;  // Arrêter la chute si le joueur frappe le dessous de la plateforme
                             isGrounded = true;
-                            isCollidingWithPlatform = true;
+                            /*isCollidingWithPlatform = true;*/
                         }
                         else
                         {
-                            GetOwner()->Move(0.0f, overlapY);
+                            velocity.y = 0.0f;
+                            /*GetOwner()->Move(0.0f, overlapY);*/
                         }
                     }
                 }
@@ -269,13 +254,21 @@ private:
         }
 
         // Si le joueur n'est en collision avec aucune plateforme, mettre à jour le drapeau.
-        if (!isCollidingWithPlatform)
-        {
-            isGrounded = false;
-        }
+
+        isGrounded = false;
+        canMoveLeft = true;
+        canMoveRight = true;
+        return false;
+
 
         // Réinitialiser le drapeau pour la prochaine itération.
     }
+
+
+
+
+
+
 
     // Fonction pour inflige des degats a l'ennemie
     void DealDamage(GameObject* enemy)

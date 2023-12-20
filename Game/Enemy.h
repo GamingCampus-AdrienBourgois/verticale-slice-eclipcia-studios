@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "InputModule.h"
 #include "Projectile.h"
 #include "include/Components/SquareCollider.h"
 
@@ -20,14 +19,14 @@ public:
 		float positionDif = playerPosition.x - enemyPosition.x;
 
 		// Verifie la position du joueur et met a jour la position de l'ennemie pour le suivre
-		if (playerPosition.x < enemyPosition.x)
-		{
-			enemyPosition.x -= speed * _delta_time;
-		}
-		if (playerPosition.x > enemyPosition.x)
-		{
-			enemyPosition.x += speed * _delta_time;
-		}
+		//if (playerPosition.x < enemyPosition.x)
+		//{
+		//	enemyPosition.x -= speed * _delta_time;
+		//}
+		//if (playerPosition.x > enemyPosition.x)
+		//{
+		//	enemyPosition.x += speed * _delta_time;
+		//}
 
 		// Calcule la velocite
 		velocity.y += gravity * _delta_time;
@@ -48,8 +47,8 @@ private:
 	
 	float shootTimer;
 	std::vector<GameObject*> projectiles;
-	float speed = 120.0f; // Vitesse de deplacement
-	float gravity = 500.0f; // Gravite
+	float speed = 100.0f; // Vitesse de deplacement
+	float gravity = 2000.0f; // Gravite
 
 	Maths::Vector2<float> velocity = { 0.0f, 0.0f };
 	bool isGrounded = true; // Renvoie si l'ennemie touche le sol
@@ -91,9 +90,7 @@ private:
 		if (GetOwner()->GetComponent<Health>()->IsDead() == true)
 		{
 			// Detruit/Supprime l'ennemie s'il est mort
-			//GetOwner()->Destroy(); // Crash si espace est reappuyer apres avoir tuer un ennemie
-			//GetOwner()->~GameObject(); // Crash au dernier ennemie tuer
-			GetOwner()->GetScene()->DestroyGameObject(GetOwner()); // Crash au dernier ennemie tuer
+			GetOwner()->GetScene()->DestroyGameObject(GetOwner());
 		}
 	}
 

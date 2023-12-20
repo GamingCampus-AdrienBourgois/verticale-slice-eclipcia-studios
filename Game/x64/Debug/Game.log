@@ -1,3 +1,2 @@
 ﻿  main.cpp
-D:\System\Desktop\Vertical Slice\Game\include\Player.h(221): warning C4715: 'Player::CheckEnemyCollision' : les chemins de contrôle ne retournent pas tous une valeur
-  Game.vcxproj -> D:\System\Desktop\Vertical Slice\x64\Debug\Game.exe
+  Game.vcxproj -> C:\Users\jhussenet\Documents\Vertical Slice\x64\Debug\Game.exe
