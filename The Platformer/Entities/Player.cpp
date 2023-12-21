@@ -22,15 +22,12 @@ Player::Player
 	InitBody();
 	InitCollider();
 	InitAnimations();
-	InitEmitters();
 	
 	m_ghostBuffer.loadFromFile("res/sounds/ghost.wav");
 	m_ghost.setBuffer(m_ghostBuffer);
 }
 
 Player::~Player() {
-	delete m_emitter;
-	delete m_fallEmitter;
 }
 
 void Player::FixedUpdate() {
@@ -41,10 +38,7 @@ void Player::Update() {
 	Animate();
 	UpdateVelocity();
 	KeepInBorders();
-	UpdateEmitters();
-	UpdateTimer();
 
-	// this here oh god
 	if (m_healthBar.GetHealthState() <= 0)
 		m_alive = false;
 }
@@ -264,7 +258,7 @@ void Player::Animate() {
 		return;
 	}
 
-	if (m_velocity.y == 0.0f) { // NOT JUMPING
+	if (m_velocity.y == 0.0f) { 
 		if (m_velocity.x < 0) {
 			m_Animations["move"].Update(i_dt);
 		}
@@ -295,11 +289,10 @@ void Player::KeepInBorders() {
 
 void Player::Crouch() {
 	bool wasCrouching = m_crouching;
-	// yeah i know
-	m_crouching = sf::Keyboard::isKeyPressed(sf::Keyboard::S) && m_grounded && m_movable;
+	
+	m_crouching = (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && m_grounded && m_movable;
 
 	if (m_crouching) {
-		//float preY = i_collider.position.y;
 
 		m_velocity.x = 0.0f;
 		i_collider.size.y = 40.0f;
@@ -365,52 +358,17 @@ void Player::UpdateVelocity() {
 	if (m_grabbing)
 		return;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) or (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))){
 		m_velocity.x = -m_movementSpeed;
 		reinterpret_cast<sf::Sprite*>(i_drawable)->setScale(sf::Vector2f(-2.0f, 2.0f));
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)) or (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))){
 		m_velocity.x = m_movementSpeed;
 		reinterpret_cast<sf::Sprite*>(i_drawable)->setScale(sf::Vector2f(2.0f, 2.0f));
 	}
 }
 
-void Player::UpdateEmitters() {
-	m_emitter->SetDirection(sf::Vector2f((m_velocity.x < 0.0f ? 1.0f : -1.0f), 0.0f));
-
-	m_emitter->SetPosition(sf::Vector2f(i_collider.position.x, i_collider.position.y - 10.0f));
-	if (m_velocity.x != 0.0f)
-		m_emitter->AddParticles();
-	m_emitter->Update(i_dt);
-
-	m_emitter->SetBirthColor(Extern::particle_birth_color);
-	m_emitter->SetDeathColor(Extern::particle_death_color);
-
-	m_fallEmitter->SetPosition(sf::Vector2f(i_collider.position.x - 10.0f, i_collider.position.y + 32.0f));
-	if (!m_wasGrounded && m_grounded) {
-		m_fallEmitter->AddParticles();
-		m_wasGrounded = true;
-	}
-	m_fallEmitter->Update(i_dt);
-}
-
-void Player::InitEmitters() {
-	{
-		m_emitter = new ParticleEmitter(Extern::particle_birth_color, Extern::particle_death_color, 15);
-		m_emitter->SetLifeTimeRange(0.5f, 2.0f);
-		m_emitter->SetSpeed(1.5f);
-	}
-
-	{
-		m_fallEmitter = new ParticleEmitter(sf::Color(79, 46, 26), sf::Color(20, 48, 18), 13);
-		m_fallEmitter->SetLifeTimeRange(0.5f, 1.5f);
-		m_fallEmitter->SetDirection(sf::Vector2f(0, -1));
-		m_fallEmitter->SetSpread(4.59f);
-		m_fallEmitter->SetSpeed(1.1f);
-		m_fallEmitter->SetParticleMax(35);
-	}
-}
 
 void Player::InitAnimations() {
 	auto sprite = reinterpret_cast<sf::Sprite*>(i_drawable);
@@ -441,8 +399,6 @@ void Player::InitCollider() {
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(*m_emitter, i_shader);
-	target.draw(*m_fallEmitter, i_shader);
 	target.draw(*i_drawable, i_shader);
 	target.draw(m_healthBar);
 }
