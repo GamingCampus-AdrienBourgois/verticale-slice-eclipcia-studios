@@ -82,16 +82,16 @@ void Application::MoveWindow() {
 
 void Application::LoadMusicsAndSounds() {
     //MUSIC//
-    //MusicController::Get().AddMusic("menu", "res/music/menu.ogg");
-    //MusicController::Get().AddMusic("main_track", "res/music/main.ogg");
+    MusicController::Get().AddMusic("menu", "res/music/menu.ogg");
+    MusicController::Get().AddMusic("main_track", "res/music/main.ogg");
     
 
     //SOUNDS//
-    //MusicController::Get().AddSound("button", "res/sounds/button.wav");
-    //MusicController::Get().AddSound("player_jump", "res/sounds/playerJump.wav");
-    //MusicController::Get().AddSound("player_crouch", "res/sounds/playerCrouch.wav");
-    //MusicController::Get().AddSound("blow_up", "res/sounds/blowUp.wav");
-    //MusicController::Get().AddSound("pick_up", "res/sounds/pickUp.wav");
+    MusicController::Get().AddSound("button", "res/sounds/button.wav");
+    MusicController::Get().AddSound("player_jump", "res/sounds/playerJump.wav");
+    MusicController::Get().AddSound("player_crouch", "res/sounds/playerCrouch.wav");
+    MusicController::Get().AddSound("blow_up", "res/sounds/blowUp.wav");
+    MusicController::Get().AddSound("pick_up", "res/sounds/pickUp.wav");
 
 }
 
