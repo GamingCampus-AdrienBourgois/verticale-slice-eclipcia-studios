@@ -7,9 +7,6 @@ Settings::Settings(StateMachine& machine)
 	InitAssets();
 	InitButtons();
 	InitSeekerBars();
-	InitParticleEmitter();
-	InitColorPickers();
-
 	InitSprites();
 	InitTexts();
 }
@@ -87,15 +84,9 @@ void Settings::InitTexts() {
 	for (auto& t : m_Texts)
 		t.second.setFont(m_FontManager.Get("default"));
 
-	m_Texts["sound"].setPosition(sf::Vector2f(815.0f, 100.0f));
+	m_Texts["sound"].setPosition(sf::Vector2f(815.0f, 250.0f));
 											  
-	m_Texts["music"].setPosition(sf::Vector2f(815.0f, 320.0f));
-
-	m_Texts["player_particle"].setPosition(sf::Vector2f(815.0f, 560.0f));
-
-	m_Texts["primary"].setPosition(sf::Vector2f(270.0f, 671.0f));
-
-	m_Texts["secondary"].setPosition(sf::Vector2f(480.0f, 810.0f));
+	m_Texts["music"].setPosition(sf::Vector2f(815.0f, 500.0f));
 }
 
 void Settings::UpdateSeekerBars() {
@@ -106,8 +97,8 @@ void Settings::UpdateSeekerBars() {
 void Settings::InitSeekerBars() {
 	std::initializer_list<std::pair<const std::string, SeekerBar*>> init =
 	{
-		{ "sound", new SeekerBar(sf::Vector2f(350.0f, 180.0f), m_FontManager.Get("default"), 10, Extern::sound_volume / 8) },
-		{ "music", new SeekerBar(sf::Vector2f(350.0f, 400.0f), m_FontManager.Get("default"), 10, Extern::music_volume / 8) },
+		{ "sound", new SeekerBar(sf::Vector2f(350.0f, 350.0f), m_FontManager.Get("default"), 10, Extern::sound_volume / 8) },
+		{ "music", new SeekerBar(sf::Vector2f(350.0f, 600.0f), m_FontManager.Get("default"), 10, Extern::music_volume / 8) },
 	};
 
 	m_SeekerBars = init;
