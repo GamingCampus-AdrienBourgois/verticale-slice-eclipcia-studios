@@ -3,6 +3,7 @@
 
 #include "../UI/Button.hpp"
 #include "../UI/Seeker_Bar.hpp"
+#include "../UI/Color_Picker.hpp"
 #include "../Effects/Transition/Transition.hpp"
 
 
@@ -25,7 +26,7 @@ private:
 	std::unordered_map<std::string, sf::Sprite> m_Sprites;
 
 	std::unordered_map<std::string, Text> m_Texts;
-
+	std::vector<ColorPicker*> m_pickers;
 
 	void InitTexts();
 
