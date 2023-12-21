@@ -11,8 +11,8 @@ Menu::Menu(StateMachine& machine)
 	InitTimer();
 	InitBorder();
 
-	//MusicController::Get().GetMusic("menu").play();
-	//MusicController::Get().GetMusic("menu").setLoop(true);
+	MusicController::Get().GetMusic("menu").play();
+	MusicController::Get().GetMusic("menu").setLoop(true);
 }
 
 Menu::~Menu() {
