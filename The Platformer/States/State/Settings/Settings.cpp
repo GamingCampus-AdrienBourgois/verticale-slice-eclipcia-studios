@@ -20,8 +20,7 @@ Settings::~Settings() {
 
 	for (auto& p : m_pickers)
 		delete p;
-
-	delete m_emitter;
+	
 }
 
 void Settings::FixedUpdate() {
@@ -31,8 +30,6 @@ void Settings::FixedUpdate() {
 void Settings::Update() {
 	UpdateButtons();
 	UpdateSeekerBars();
-	UpdateParticleEmitter();
-	UpdateColorPickers();
 }
 
 void Settings::Render(sf::RenderTarget& target) {
@@ -53,33 +50,6 @@ void Settings::Render(sf::RenderTarget& target) {
 
 	for (const auto& p : m_pickers)
 		target.draw(*p);
-
-	target.draw(*m_emitter);
-}
-
-void Settings::UpdateColorPickers() {
-	for (auto& p : m_pickers)
-		p->Update(GetMousePos());
-}
-
-void Settings::InitColorPickers() {
-	m_pickers.push_back(new ColorPicker(Extern::particle_birth_color, sf::Vector2f(270.0f, 740.0f)));
-	m_pickers.push_back(new ColorPicker(Extern::particle_death_color, sf::Vector2f(480.0f, 740.0f)));
-}
-
-void Settings::UpdateParticleEmitter() {
-	m_emitter->AddParticles();
-	m_emitter->Update(i_dt);
-	m_emitter->SetBirthColor(Extern::particle_birth_color);
-	m_emitter->SetDeathColor(Extern::particle_death_color);
-}
-
-void Settings::InitParticleEmitter() {
-	m_emitter = new ParticleEmitter(Extern::particle_birth_color, Extern::particle_death_color, 75);
-	m_emitter->SetLifeTimeRange(3.5f, 8.5f);
-	m_emitter->SetDirection(sf::Vector2f(1, 0));
-	m_emitter->SetPosition(sf::Vector2f(725.0f, 750.0f));
-	m_emitter->SetParticleMax(100);
 }
 
 void Settings::InitTexts() {
