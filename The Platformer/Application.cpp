@@ -36,7 +36,7 @@ void Application::Update() {
     HandleEvents();
 
     Camera::Get().Update(m_dt);
-    //MusicController::Get().Update();
+    MusicController::Get().Update();
 
     m_machine->Update();
 
