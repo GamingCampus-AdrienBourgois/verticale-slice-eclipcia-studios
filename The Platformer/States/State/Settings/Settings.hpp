@@ -3,10 +3,8 @@
 
 #include "../UI/Button.hpp"
 #include "../UI/Seeker_Bar.hpp"
-#include "../UI/Color_Picker.hpp"
 #include "../Effects/Transition/Transition.hpp"
 
-#include "../Effects/Particle Emitter/Particle_Emitter.hpp"
 
 class Settings : public State {
 public:
@@ -27,15 +25,7 @@ private:
 	std::unordered_map<std::string, sf::Sprite> m_Sprites;
 
 	std::unordered_map<std::string, Text> m_Texts;
-	std::vector<ColorPicker*> m_pickers;
 
-	ParticleEmitter* m_emitter;
-
-	void UpdateColorPickers();
-	void InitColorPickers();
-
-	void UpdateParticleEmitter();
-	void InitParticleEmitter();
 
 	void InitTexts();
 
