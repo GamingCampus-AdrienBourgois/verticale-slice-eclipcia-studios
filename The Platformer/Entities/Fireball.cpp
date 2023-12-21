@@ -60,7 +60,7 @@ void Fireball::UpdateLight() {
 }
 
 void Fireball::InitLight() {
-	m_light = new Light(i_collider.position, 290.0f);
+	m_light = new Light(i_collider.position, 100.0f);
 }
 
 void Fireball::UpdateEmitter() {
@@ -71,7 +71,7 @@ void Fireball::UpdateEmitter() {
 }
 
 void Fireball::InitEmiiter() {
-	m_emitter = new ParticleEmitter(sf::Color(255, 255, 0), sf::Color(255, 0, 0), 20);
+	m_emitter = new ParticleEmitter(sf::Color(169, 127, 173), sf::Color(104, 68, 255), 20);
 	m_emitter->SetDirection(sf::Vector2f(m_left ? -1 : 1, 0.0f));
 	m_emitter->SetLifeTimeRange(0.8f, 2.0f);
 	m_emitter->SetSpeed(4.1f);
