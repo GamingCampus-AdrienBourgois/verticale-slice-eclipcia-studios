@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "Collision/Collision.hpp"
 
-//TODO: REMOVE DRAWABLE
 class Wall{
 public:
 	Wall(sf::Vector2f position, sf::Vector2f size);
