@@ -32,7 +32,7 @@ private:
 
 	bool m_alive = true;
 
-	const float m_movementSpeed = 420.0f;
+	const float m_movementSpeed = 350.0f;
 	float m_torque				= 0.85f;
 	const float m_gravity		= 4605.0f;
 	const float m_jumpVelocity  = -1200.0f;
@@ -51,8 +51,6 @@ private:
 	const sf::Vector2i m_playerSize = sf::Vector2i(96, 84);
 	std::unordered_map<std::string, Animator> m_Animations;
 
-	ParticleEmitter* m_emitter;
-	ParticleEmitter* m_fallEmitter;
 
 	sf::Clock m_hitTimer;
 
@@ -75,8 +73,6 @@ private:
 	void Move();
 	void UpdateVelocity();
 
-	void UpdateEmitters();
-	void InitEmitters();
 
 	void InitAnimations();
 	void InitBody();
