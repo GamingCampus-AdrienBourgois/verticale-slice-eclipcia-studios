@@ -18,7 +18,7 @@ public:
 	sf::Music& GetMusic(std::string name);
 private:
 	MusicController() {}
-	//~MusicController() {}
+	~MusicController() {}
 
 	std::vector<sf::SoundBuffer> m_Buffers;
 	std::unordered_map<std::string, sf::Music> m_Musics;
